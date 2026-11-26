@@ -18,6 +18,9 @@
       name="google-site-verification"
       content="N6BJNzlX5r4qp-QN3azpFj_pP9UmN_sOT3diTrfNflU"
     />
+    <link rel="canonical" href="https://nutriasuave.github.io/pulso-rd/" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
     <!-- Vista previa profesional al compartir en WhatsApp y redes -->
     <meta property="og:type" content="website" />
@@ -31,6 +34,13 @@
       content="Comparador de tasas USD/EUR por banco, calculadora de combustibles y los 17 peajes RD Vial, examen práctico INTRANT y rutas de transporte público."
     />
     <meta property="og:url" content="https://nutriasuave.github.io/pulso-rd/" />
+    <meta
+      property="og:image"
+      content="https://nutriasuave.github.io/pulso-rd/og-image.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,7 +48,554 @@
       href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <style>
+      :root {
+        --paper: #eae7dc;
+        --paper-raised: #f3f1e8;
+        --ink: #16233d;
+        --ink-soft: #44506a;
+        --gold: #b9872a;
+        --sea: #2f6f62;
+        --danger: #b04a3c;
+        --line: rgba(22, 35, 61, 0.18);
+        --radius: 2px;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --paper: #141a24;
+          --paper-raised: #1b2230;
+          --ink: #ece7da;
+          --ink-soft: #aeb6c6;
+          --gold: #d9a94a;
+          --sea: #5fa396;
+          --danger: #d97365;
+          --line: rgba(236, 231, 218, 0.18);
+          color-scheme: dark;
+        }
+      }
+      :root[data-theme="dark"] {
+        --paper: #141a24;
+        --paper-raised: #1b2230;
+        --ink: #ece7da;
+        --ink-soft: #aeb6c6;
+        --gold: #d9a94a;
+        --sea: #5fa396;
+        --danger: #d97365;
+        --line: rgba(236, 231, 218, 0.18);
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--paper);
+        color: var(--ink);
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        -webkit-font-smoothing: antialiased;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Source Serif 4", serif;
+        margin: 0;
+        font-weight: 700;
+      }
+      .wrap {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      header.top {
+        border-bottom: 1px solid var(--line);
+        padding: 22px 0;
+      }
+      .brandrow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .brand {
+        font-size: 1.5rem;
+        letter-spacing: -0.01em;
+      }
+      .brand em {
+        font-style: normal;
+        color: var(--gold);
+      }
+      .headerRight {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .tagline {
+        color: var(--ink-soft);
+        font-size: 0.92rem;
+        max-width: 28ch;
+        text-align: right;
+      }
+      .themeBtn {
+        background: none;
+        border: 1px solid var(--line);
+        color: var(--ink);
+        border-radius: var(--radius);
+        padding: 7px 11px;
+        font-family: "Inter", sans-serif;
+        font-size: 0.85rem;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .themeBtn:hover {
+        border-color: var(--gold);
+      }
+
+      .ticker {
+        border-bottom: 1px solid var(--line);
+        background: var(--paper-raised);
+      }
+      .ticker-row {
+        display: flex;
+        overflow-x: auto;
+      }
+      .tick {
+        flex: 1 1 0;
+        min-width: 170px;
+        padding: 16px 24px;
+        border-right: 1px solid var(--line);
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+      .tick:hover {
+        background: rgba(185, 135, 42, 0.08);
+      }
+      .tick:last-child {
+        border-right: none;
+      }
+      .tick .label {
+        font-size: 0.76rem;
+        color: var(--ink-soft);
+      }
+      .tick .pair {
+        display: flex;
+        gap: 14px;
+        margin-top: 3px;
+        font-variant-numeric: tabular-nums;
+      }
+      .tick .pair .v {
+        font-weight: 700;
+        font-size: 1.15rem;
+      }
+      .tick .pair .k {
+        font-size: 0.68rem;
+        color: var(--ink-soft);
+        display: block;
+        font-weight: 400;
+      }
+
+      main {
+        padding: 40px 0 80px;
+      }
+      section {
+        margin-bottom: 56px;
+        scroll-margin-top: 20px;
+      }
+      .section-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        border-bottom: 2px solid var(--ink);
+        padding-bottom: 10px;
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .section-head h2 {
+        font-size: 1.5rem;
+      }
+      .section-head .note {
+        font-size: 0.78rem;
+        color: var(--ink-soft);
+      }
+      .section-sub {
+        font-size: 0.85rem;
+        color: var(--ink-soft);
+        margin: 0 0 22px;
+      }
+
+      .toggles {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
+      }
+      .toggle-group {
+        display: inline-flex;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .toggle-group button {
+        background: var(--paper-raised);
+        color: var(--ink-soft);
+        border: none;
+        padding: 9px 14px;
+        font-family: "Inter", sans-serif;
+        font-size: 0.85rem;
+        cursor: pointer;
+        border-right: 1px solid var(--line);
+      }
+      .toggle-group button:last-child {
+        border-right: none;
+      }
+      .toggle-group button.active {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .calc {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      @media (min-width: 640px) {
+        .calc {
+          grid-template-columns: 1.1fr 1fr;
+        }
+      }
+      .field {
+        margin-bottom: 16px;
+      }
+      label {
+        display: block;
+        font-size: 0.82rem;
+        color: var(--ink-soft);
+        margin-bottom: 6px;
+      }
+      input,
+      select {
+        width: 100%;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        padding: 10px 12px;
+        background: var(--paper-raised);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        color: var(--ink);
+      }
+      input:focus,
+      select:focus {
+        outline: 2px solid var(--gold);
+        outline-offset: 1px;
+      }
+
+      .bank-rates {
+        border-top: 1px solid var(--line);
+      }
+      .head-row,
+      .bank-row {
+        display: grid;
+        grid-template-columns: 1fr 54px 54px;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .head-row {
+        font-size: 0.72rem;
+        color: var(--ink-soft);
+      }
+      .head-row span:not(:first-child),
+      .bank-row .num {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      .bank-row {
+        font-size: 0.92rem;
+      }
+      .bank-row .name {
+        font-weight: 600;
+      }
+      .bank-row .num.used {
+        color: var(--ink);
+        font-weight: 700;
+      }
+      .bank-row .num:not(.used) {
+        color: var(--ink-soft);
+      }
+      .bank-row.best .name::after {
+        content: " — mejor tasa";
+        font-weight: 400;
+        color: var(--sea);
+        font-size: 0.72rem;
+      }
+
+      .result {
+        background: var(--paper-raised);
+        border: 1px solid var(--line);
+        padding: 20px;
+        margin-top: 4px;
+      }
+      .result .big {
+        font-family: "Source Serif 4", serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+      }
+      .result .small {
+        color: var(--ink-soft);
+        font-size: 0.85rem;
+      }
+      .shareBtn,
+      .quizBtn {
+        margin-top: 14px;
+        background: var(--sea);
+        color: var(--paper-raised);
+        border: none;
+        padding: 10px 16px;
+        border-radius: var(--radius);
+        font-family: "Inter", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .shareBtn:hover,
+      .quizBtn:hover {
+        opacity: 0.9;
+      }
+      .shareBtn.copied {
+        background: var(--gold);
+      }
+
+      .fuel-table {
+        border-top: 1px solid var(--line);
+        margin-bottom: 24px;
+      }
+      .fuel-row {
+        display: grid;
+        grid-template-columns: 1fr 140px;
+        gap: 12px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.92rem;
+      }
+      .fuel-row .price {
+        text-align: right;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+      .fuel-row .unit {
+        font-size: 0.72rem;
+        color: var(--ink-soft);
+        font-weight: 400;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 10px;
+      }
+      .chip {
+        background: var(--paper-raised);
+        border: 1px solid var(--line);
+        color: var(--ink-soft);
+        padding: 5px 9px;
+        font-size: 0.75rem;
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-family: "Inter", sans-serif;
+      }
+      .chip:hover {
+        border-color: var(--gold);
+        color: var(--ink);
+      }
+
+      /* ---------- Tabla de los 17 Peajes RD Vial ---------- */
+      .toll-details {
+        margin-top: 24px;
+        border: 1px solid var(--line);
+        background: var(--paper-raised);
+        border-radius: var(--radius);
+      }
+      .toll-details summary {
+        padding: 13px 16px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        color: var(--ink);
+      }
+      .toll-details summary:hover {
+        color: var(--gold);
+      }
+      .toll-wrap {
+        overflow-x: auto;
+        border-top: 1px solid var(--line);
+      }
+      .toll-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.84rem;
+        min-width: 540px;
+      }
+      .toll-table th,
+      .toll-table td {
+        padding: 9px 12px;
+        border-bottom: 1px solid var(--line);
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      .toll-table th:first-child,
+      .toll-table td:first-child {
+        text-align: left;
+        font-weight: 500;
+      }
+      .toll-table th {
+        font-size: 0.74rem;
+        color: var(--ink-soft);
+        background: var(--paper);
+      }
+      .toll-table th small {
+        font-weight: 400;
+        font-size: 0.66rem;
+      }
+      .toll-corridor td {
+        background: rgba(185, 135, 42, 0.1);
+        font-weight: 700 !important;
+        color: var(--gold);
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      /* ---------- 03 Simulador INTRANT ---------- */
+      .quiz-box {
+        background: var(--paper-raised);
+        border: 1px solid var(--line);
+        padding: 22px;
+      }
+      .quiz-q {
+        font-family: "Source Serif 4", serif;
+        font-size: 1.15rem;
+        margin-bottom: 16px;
+        line-height: 1.4;
+      }
+      .quiz-opts {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .quiz-opt {
+        text-align: left;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        color: var(--ink);
+        padding: 12px 14px;
+        font-family: "Inter", sans-serif;
+        font-size: 0.92rem;
+        cursor: pointer;
+        border-radius: var(--radius);
+      }
+      .quiz-opt:hover:not(:disabled) {
+        border-color: var(--gold);
+      }
+      .quiz-opt.ok {
+        border-color: var(--sea);
+        background: rgba(47, 111, 98, 0.15);
+        font-weight: 600;
+      }
+      .quiz-opt.bad {
+        border-color: var(--danger);
+        background: rgba(176, 74, 60, 0.15);
+      }
+      .quiz-explain {
+        margin-top: 14px;
+        font-size: 0.86rem;
+        color: var(--ink-soft);
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+      }
+
+      /* ---------- 04 Transporte ---------- */
+      .route-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .route-card {
+        background: var(--paper-raised);
+        border: 1px solid var(--line);
+        padding: 16px 18px;
+        border-radius: var(--radius);
+      }
+      .route-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 6px;
+        flex-wrap: wrap;
+      }
+      .route-badge {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        padding: 2px 8px;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        border-radius: var(--radius);
+      }
+      .route-fare {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--sea);
+      }
+      .route-title {
+        font-family: "Source Serif 4", serif;
+        font-size: 1.08rem;
+        font-weight: 700;
+        margin: 4px 0 8px;
+      }
+      .route-stops {
+        font-size: 0.86rem;
+        color: var(--ink);
+        line-height: 1.45;
+        margin: 0 0 8px;
+      }
+      .route-sched {
+        font-size: 0.76rem;
+        color: var(--ink-soft);
+      }
+      .route-empty {
+        padding: 20px;
+        text-align: center;
+        color: var(--ink-soft);
+        border: 1px dashed var(--line);
+        font-size: 0.9rem;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 24px 0;
+        font-size: 0.8rem;
+        color: var(--ink-soft);
+      }
+    </style>
   </head>
   <body>
     <header class="top">
@@ -267,7 +824,1094 @@
       </div>
     </footer>
 
-    <script src="data.js"></script>
-    <script src="app.js"></script>
+    <script>
+      const UPDATED_AT = "26 nov 2026, 11:00 AM";
+
+      const rates = {
+        USD: [
+          { name: "Banreservas", buy: 61.2, sell: 62.0 },
+          { name: "Banco Popular", buy: 61.5, sell: 62.3 },
+          { name: "BHD", buy: 61.35, sell: 62.15 },
+          { name: "Qik", buy: 61.6, sell: 62.1 },
+          { name: "Vimenca", buy: 61.55, sell: 62.05 },
+        ],
+        EUR: [
+          { name: "Banreservas", buy: 66.1, sell: 68.4 },
+          { name: "Banco Popular", buy: 66.7, sell: 68.1 },
+          { name: "BHD", buy: 66.4, sell: 68.25 },
+          { name: "Qik", buy: 66.8, sell: 67.95 },
+          { name: "Vimenca", buy: 66.55, sell: 68.05 },
+        ],
+      };
+
+      const fuels = [
+        { id: "premium", name: "Gasolina Premium", price: 280.5 },
+        { id: "regular", name: "Gasolina Regular", price: 262.9 },
+        { id: "optimo", name: "Gasoil Óptimo", price: 229.3 },
+        { id: "gasoilReg", name: "Gasoil Regular", price: 213.7 },
+        { id: "glp", name: "GLP (gas vehicular)", price: 134.6 },
+      ];
+
+      const FUEL_WEEK_LABEL = "Semana del 24 al 30 nov 2026";
+
+      /* ---------- Los 17 Peajes Oficiales de RD Vial (Tarifas por pasada en RD$) ---------- */
+      const tollsData = [
+        // Corredor Este
+        {
+          name: "Las Américas (Autopista Las Américas)",
+          corridor: "Este",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        {
+          name: "La Romana (Circunvalación de La Romana)",
+          corridor: "Este",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        {
+          name: "Coral 1 (Autopista del Coral)",
+          corridor: "Este",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        {
+          name: "Coral 2 (Autopista del Coral)",
+          corridor: "Este",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        // Corredor Nordeste (Samaná)
+        {
+          name: "Marbella (Autopista del Nordeste)",
+          corridor: "Nordeste",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        {
+          name: "Guaraguao (Autopista del Nordeste)",
+          corridor: "Nordeste",
+          cat1: 200,
+          cat2: 300,
+          cat3: 400,
+          cat4: 500,
+          cat5: 600,
+        },
+        {
+          name: "El Naranjal (Autopista del Nordeste)",
+          corridor: "Nordeste",
+          cat1: 200,
+          cat2: 300,
+          cat3: 400,
+          cat4: 500,
+          cat5: 600,
+        },
+        {
+          name: "El Catey (Bulevar Turístico del Atlántico)",
+          corridor: "Nordeste",
+          cat1: 400,
+          cat2: 1000,
+          cat3: 1300,
+          cat4: 1600,
+          cat5: 1900,
+        },
+        // Corredor Norte (Cibao)
+        {
+          name: "Duarte (Km 32 Autopista Duarte)",
+          corridor: "Norte",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        {
+          name: "Circunvalación Norte de Santiago",
+          corridor: "Norte",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        // Corredor Sur
+        {
+          name: "6 de Noviembre (Autopista 6 de Noviembre)",
+          corridor: "Sur",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        {
+          name: "Sánchez (Carretera Sánchez)",
+          corridor: "Sur",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        {
+          name: "Circunvalación de Azua",
+          corridor: "Sur",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        // Gran Santo Domingo
+        {
+          name: "Circunvalación Juan Bosch — Tramo 1",
+          corridor: "Santo Domingo",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        {
+          name: "Circunvalación Juan Bosch — Tramo 2",
+          corridor: "Santo Domingo",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        {
+          name: "Circunvalación Juan Bosch — Tramo 2B",
+          corridor: "Santo Domingo",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+        {
+          name: "Avenida Ecológica",
+          corridor: "Santo Domingo",
+          cat1: 100,
+          cat2: 200,
+          cat3: 300,
+          cat4: 400,
+          cat5: 600,
+        },
+      ];
+
+      // km y peajes totales (ida y vuelta, Categoría 1)
+      const popularRoutes = [
+        {
+          label: "SDQ → Santiago",
+          km: 310,
+          tollsRoundTrip: 200,
+          tollNote: "Peaje Duarte (RD$100 ida + RD$100 vuelta)",
+        },
+        {
+          label: "SDQ → Punta Cana",
+          km: 390,
+          tollsRoundTrip: 800,
+          tollNote: "4 peajes por vía: Las Américas, Romana, Coral 1 y 2",
+        },
+        {
+          label: "SDQ → Las Terrenas",
+          km: 315,
+          tollsRoundTrip: 1800,
+          tollNote:
+            "4 peajes por vía: Marbella, Guaraguao, Naranjal y El Catey",
+        },
+        {
+          label: "SDQ → Puerto Plata",
+          km: 420,
+          tollsRoundTrip: 200,
+          tollNote: "Peaje Duarte (RD$100 ida + RD$100 vuelta)",
+        },
+        {
+          label: "SDQ → Barahona",
+          km: 374,
+          tollsRoundTrip: 400,
+          tollNote: "2 peajes por vía: 6 de Noviembre y Circunvalación Azua",
+        },
+      ];
+
+      const enginePresets = [
+        { label: "Compacto", kmPerGallon: 45 },
+        { label: "Sedán", kmPerGallon: 32 },
+        { label: "Jeepeta / SUV", kmPerGallon: 22 },
+      ];
+
+      /* ---------- 25 Preguntas Oficiales Examen Teórico INTRANT (Ley 63-17) ---------- */
+      const intrantQuestions = [
+        {
+          q: "¿A qué velocidad máxima está permitido circular en una zona escolar según el examen teórico del INTRANT?",
+          options: ["15 km/h", "20 km/h", "40 km/h", "50 km/h"],
+          correct: 1,
+          explain:
+            "El cuestionario oficial del INTRANT establece un límite máximo de 20 km/h en zonas escolares para proteger a los estudiantes.",
+        },
+        {
+          q: "Según la Ley 63-17, ¿cuál es el rango de velocidad máxima permitida en zona urbana residencial, salvo señalización u ordenanza municipal distinta?",
+          options: [
+            "De 10 a 20 km/h",
+            "De 30 a 60 km/h",
+            "Siempre 80 km/h",
+            "No existe límite en zona urbana",
+          ],
+          correct: 1,
+          explain:
+            "La Ley 63-17 establece un rango de 30 a 60 km/h en zona urbana residencial (no un número fijo). Además, los ayuntamientos pueden fijar límites propios por ordenanza — por ejemplo, el Distrito Nacional tiene una ordenanza vigente que fija 50 km/h en sus avenidas.",
+        },
+        {
+          q: "¿Cuál es el período de vigencia de la licencia de conducir de Categoría 02 antes de cumplir los 65 años de edad?",
+          options: ["2 años", "4 años", "5 años", "6 años"],
+          correct: 1,
+          explain:
+            "La licencia Categoría 02 tiene una vigencia de 4 años hasta los 65 años de edad; a partir de los 65 años pasa a renovarse cada 2 años.",
+        },
+        {
+          q: "¿Cuál es la tasa máxima de alcoholemia (gramos de alcohol por litro de sangre) permitida a un titular de permiso de aprendizaje?",
+          options: [
+            "0.0 g/l (tolerancia cero)",
+            "0.2 g/l",
+            "0.5 g/l",
+            "0.8 g/l",
+          ],
+          correct: 0,
+          explain:
+            "El manual oficial del INTRANT establece que queda totalmente prohibida la conducción con un nivel de alcoholemia mayor a 0,0 g/l para titulares de un permiso de aprendizaje.",
+        },
+        {
+          q: "En una situación de aglomeración o para rebasar a otro vehículo, ¿está permitido circular por el paseo o arcén?",
+          options: [
+            "Sí, si hay tapón",
+            "Sí, con luces intermitentes",
+            "No, está prohibido",
+            "Solo en autopistas",
+          ],
+          correct: 2,
+          explain:
+            "Está terminantemente prohibido circular o rebasar utilizando el paseo o arcén; es exclusivo para emergencias.",
+        },
+        {
+          q: "¿Qué indican las líneas blancas continuas empleadas como líneas de carril en la vía?",
+          options: [
+            "Se puede cambiar de carril con precaución",
+            "Está prohibido cambiarse de carril",
+            "Carril exclusivo de transporte pesado",
+            "Zona de estacionamiento permitido",
+          ],
+          correct: 1,
+          explain:
+            "Las líneas blancas continuas indican que está prohibido cambiarse de carril; el conductor debe mantenerse dentro de su carril.",
+        },
+        {
+          q: "¿Qué significa una línea continua simple amarilla en el centro de la vía?",
+          options: [
+            "Se puede adelantar en ambos sentidos",
+            "Prohibido adelantar en ambos sentidos",
+            "Solo informativa",
+            "Carril exclusivo de motores",
+          ],
+          correct: 1,
+          explain:
+            "Una línea continua amarilla en el eje de la calzada prohíbe adelantar en ambos sentidos de circulación.",
+        },
+        {
+          q: "¿Qué indica una señal triangular con borde rojo y fondo blanco?",
+          options: [
+            "Prohibición absoluta",
+            "Advertencia o peligro",
+            "Información turística",
+            "Obligación",
+          ],
+          correct: 1,
+          explain:
+            "Las señales triangulares con borde rojo son preventivas: advierten sobre un peligro o condición especial más adelante en la vía.",
+        },
+        {
+          q: "¿Qué indica una señal circular con borde rojo?",
+          options: [
+            "Advertencia",
+            "Prohibición o restricción",
+            "Servicio auxiliar",
+            "Desvío",
+          ],
+          correct: 1,
+          explain:
+            "Las señales circulares con borde rojo indican prohibición o restricción (como límites de velocidad o prohibido girar).",
+        },
+        {
+          q: "Según la Ley 63-17, ¿quién tiene prioridad de paso en una intersección sin semáforos ni señalización?",
+          options: [
+            "El vehículo más grande",
+            "El vehículo que se aproxima por la derecha",
+            "El que toca bocina primero",
+            "El que circula más rápido",
+          ],
+          correct: 1,
+          explain:
+            "En intersecciones sin señalización, tiene preferencia de paso el vehículo que llega por la vía de la derecha.",
+        },
+        {
+          q: "Si al acercarnos a una intersección el semáforo cambia a luz amarilla fija, ¿qué debemos hacer?",
+          options: [
+            "Acelerar para cruzar antes de la roja",
+            "Detenernos antes de entrar a la intersección si es seguro hacerlo",
+            "Tocar bocina y seguir",
+            "Girar a la izquierda sin parar",
+          ],
+          correct: 1,
+          explain:
+            "La luz amarilla advierte que el paso está por cerrarse; el conductor debe detenerse antes de la línea de pare.",
+        },
+        {
+          q: "¿Cómo deben ser transportados los niños de hasta seis (6) años en un vehículo de motor?",
+          options: [
+            "En el asiento delantero con cinturón",
+            "En un asiento especial para infantes en el asiento trasero",
+            "En los brazos de un adulto",
+            "De pie detrás del conductor",
+          ],
+          correct: 1,
+          explain:
+            "La Ley 63-17 exige que los niños de hasta 6 años viajen en un sistema de retención infantil (asiento especial) homologado.",
+        },
+        {
+          q: "¿Es obligatorio el uso del cinturón de seguridad para todos los ocupantes del vehículo?",
+          options: [
+            "Solo para el conductor",
+            "Solo en los asientos delanteros",
+            "Sí, para todos los pasajeros en cualquier asiento",
+            "Solo fuera de la ciudad",
+          ],
+          correct: 2,
+          explain:
+            "Todos los ocupantes del vehículo deben llevar abrochado el cinturón de seguridad en todo momento.",
+        },
+        {
+          q: "Hablar por el teléfono celular mientras se conduce utilizando un sistema de manos libres, ¿supone algún peligro?",
+          options: [
+            "No, es 100% seguro",
+            "Sí, porque se pierde capacidad de concentración al volante",
+            "Solo de noche",
+            "Solo si llueve",
+          ],
+          correct: 1,
+          explain:
+            "Aunque se use manos libres, mantener una conversación telefónica reduce la atención y el tiempo de reacción del conductor.",
+        },
+        {
+          q: "¿En qué horario es obligatorio encender las luces de cruce (cortas) junto a las luces de posición?",
+          options: [
+            "Solo después de medianoche",
+            "Entre el ocaso y la salida del sol en todas las vías",
+            "Solo en carreteras sin iluminación",
+            "Únicamente cuando llueve",
+          ],
+          correct: 1,
+          explain:
+            "Es obligatorio llevar encendidas las luces desde la puesta del sol (ocaso) hasta su salida, tanto en zona urbana como rural.",
+        },
+        {
+          q: "¿Cuál es la finalidad principal de las luces cortas o de cruce?",
+          options: [
+            "Alumbrar a larga distancia",
+            "Alumbrar la vía sin deslumbrar a los demás conductores",
+            "Sustituir las luces intermitentes",
+            "Señalizar estacionamiento",
+          ],
+          correct: 1,
+          explain:
+            "Las luces cortas iluminan la calzada delante del vehículo sin encandilar a quienes vienen en sentido contrario.",
+        },
+        {
+          q: "¿De qué color deben ser las luces cortas o de cruce delanteras de un vehículo?",
+          options: ["Amarillas o rojas", "Blancas", "Azules", "Verdes"],
+          correct: 1,
+          explain:
+            "Las luces frontales de cruce deben proyectar luz de color blanco.",
+        },
+        {
+          q: "¿Qué debe hacer el conductor cuando un vehículo de emergencia se aproxima con sirena o luces encendidas?",
+          options: [
+            "Acelerar delante de él",
+            "Tomar el carril derecho y reducir la velocidad hasta detenerse si es necesario",
+            "Detenerse en el centro de la vía",
+            "Ignorarlo si el semáforo está en verde",
+          ],
+          correct: 1,
+          explain:
+            "Se debe ceder el paso orillándose hacia la derecha con precaución y deteniéndose si hace falta.",
+        },
+        {
+          q: "¿En qué consiste el Sistema de Licencia por Puntos establecido por la Ley 63-17?",
+          options: [
+            "En dar descuentos en peajes por buen manejo",
+            "En otorgar un crédito de puntos que se van reduciendo al cometer infracciones",
+            "En sumar puntos para comprar vehículos",
+            "En exonerar multas antiguas",
+          ],
+          correct: 1,
+          explain:
+            "Cada titular recibe una cantidad de puntos que se descuentan según la gravedad de las infracciones cometidas.",
+        },
+        {
+          q: "Para mantener una posición correcta al volante, ¿cómo debe regularse el asiento del conductor?",
+          options: [
+            "Lo más pegado posible al guía",
+            "De modo que al pisar a fondo los pedales, las piernas queden ligeramente flexionadas",
+            "Totalmente reclinado hacia atrás",
+            "Con los brazos completamente estirados y rígidos",
+          ],
+          correct: 1,
+          explain:
+            "Las piernas deben quedar ligeramente flexionadas al pisar los pedales para tener control total y evitar lesiones en caso de impacto.",
+        },
+        {
+          q: "¿Qué se entiende por 'distancia de frenado'?",
+          options: [
+            "La distancia desde que ves el peligro hasta que pisas el freno",
+            "La distancia que recorre el vehículo desde que se pisa el freno hasta detenerse por completo",
+            "La separación mínima al estacionar",
+            "El ancho de una intersección",
+          ],
+          correct: 1,
+          explain:
+            "La distancia de frenado es el espacio recorrido desde el instante en que se acciona el pedal de freno hasta la detención total.",
+        },
+        {
+          q: "Para practicar un manejo preventivo seguro, ¿qué acciones son fundamentales?",
+          options: [
+            "Conducir siempre en el carril izquierdo",
+            "Observar constantemente la vía, anticipar maniobras y mantener distancia de seguimiento",
+            "Tocar bocina en cada esquina",
+            "Frenar bruscamente para probar los neumáticos",
+          ],
+          correct: 1,
+          explain:
+            "El manejo defensivo o preventivo se basa en anticiparse al entorno y conservar una distancia prudente respecto al vehículo delantero.",
+        },
+        {
+          q: "¿Qué función cumple la estructura del chasis y la carrocería moderna en caso de colisión?",
+          options: [
+            "Mantenerse completamente rígida sin deformarse",
+            "Absorber la energía cinética deformándose de manera controlada para proteger la cabina",
+            "Aumentar la velocidad del impacto",
+            "Evitar el uso del cinturón",
+          ],
+          correct: 1,
+          explain:
+            "Las zonas de deformación programada absorben la energía del choque para reducir la fuerza que llega a los ocupantes.",
+        },
+        {
+          q: "¿Qué elemento provoca la chispa en el interior de los motores de gasolina para encender la mezcla de aire y combustible?",
+          options: [
+            "Los inyectores",
+            "Las bujías",
+            "El alternador",
+            "El radiador",
+          ],
+          correct: 1,
+          explain:
+            "Las bujías generan la chispa eléctrica que enciende la mezcla aire-combustible en los cilindros.",
+        },
+        {
+          q: "¿Cubre el seguro obligatorio de vehículo la responsabilidad civil por daños a terceros?",
+          options: [
+            "No, solo cubre robo",
+            "Sí, cubre daños corporales y materiales a terceros dentro de los límites de la póliza",
+            "Solo cubre al conductor culpable",
+            "Únicamente si el choque ocurre en autopista",
+          ],
+          correct: 1,
+          explain:
+            "El seguro obligatorio de ley cubre la responsabilidad civil por daños personales y materiales causados a terceros hasta el límite contratado.",
+        },
+      ];
+
+      /* ---------- Datos Módulo 04: Transporte Público ---------- */
+      const transportRoutes = [
+        {
+          type: "Metro",
+          name: "Línea 1 (Villa Mella — Centro de los Héroes)",
+          fare: "RD$ 20.00",
+          schedule: "Lun–Sáb 6:00 AM – 10:30 PM | Dom/Fer 6:00 AM – 10:00 PM",
+          stops:
+            "Mamá Tingó, Gregorio Urbano Gilbert, Gregorio Luperón, José Francisco Peña Gómez, Hermanas Mirabal, Máximo Gómez, Los Taínos, Pedro Livio Cedeño, Manuel Arturo Peña Batlle, Juan Pablo Duarte (conexión L2), Prof. Juan Bosch, Casandra Damirón, Joaquín Balaguer, Amín Abel Hasbún, Francisco Alberto Caamaño, Centro de los Héroes (La Feria).",
+        },
+        {
+          type: "Metro",
+          name: "Línea 2 (María Montez / Km 9 — Concepción Bona / Megacentro)",
+          fare: "RD$ 20.00",
+          schedule: "Lun–Sáb 6:00 AM – 10:30 PM | Dom/Fer 6:00 AM – 10:00 PM",
+          stops:
+            "María Montez (Km 9 Autopista Duarte), Pedro Francisco Bonó, Francisco Gregorio Billini, Ulises Francisco Espaillat, Pedro Mir, Freddy Beras Goico, Juan Ulises García Saleta, Juan Pablo Duarte (conexión L1), Coronel Rafael Tomás Fernández, Mauricio Báez, Ramón Cáceres, Horacio Vásquez, Manuel de Jesús Galván, Eduardo Brito (conexión Teleférico T1), Ercilia Pepín, Rosa Duarte, Trina de Moya de Vásquez, Concepción Bona (Megacentro).",
+        },
+        {
+          type: "Teleférico",
+          name: "Línea 1 (Gualey — Sabana Perdida — Charles de Gaulle)",
+          fare: "RD$ 20.00 (incluye transferencia gratuita al Metro)",
+          schedule: "Lun–Sáb 6:00 AM – 10:30 PM | Dom 8:00 AM – 9:00 PM",
+          stops:
+            "Gualey (conexión estación Eduardo Brito L2), Los Tres Brazos, Sabana Perdida, Charles de Gaulle.",
+        },
+        {
+          type: "Teleférico",
+          name: "Línea 2 (Los Alcarrizos — Km 9 Autopista Duarte)",
+          fare: "RD$ 20.00",
+          schedule: "Lun–Sáb 6:00 AM – 10:30 PM | Dom 8:00 AM – 9:00 PM",
+          stops:
+            "Los Alcarrizos, Las Toronjas, Puente Blanco, Los Americanos, Km 9 Autopista Duarte (conexión Metro L2).",
+        },
+        {
+          type: "Corredor",
+          name: "Corredor Núñez de Cáceres",
+          fare: "RD$ 35.00 (pago electrónico / tarjeta / contactless)",
+          schedule: "5:30 AM – 10:30 PM",
+          stops:
+            "Av. Independencia (Feria) → Av. Rómulo Betancourt → Av. 27 de Febrero → Av. Gustavo Mejía Ricart → Av. John F. Kennedy → Los Ríos / Intec.",
+        },
+        {
+          type: "Corredor",
+          name: "Corredor Winston Churchill",
+          fare: "RD$ 35.00 (pago electrónico / tarjeta / contactless)",
+          schedule: "5:30 AM – 10:30 PM",
+          stops:
+            "Av. George Washington (Malecón) → Feria → Av. 27 de Febrero → BlueMall / Acrópolis → Av. John F. Kennedy → Plaza de la Salud → Cristo Rey.",
+        },
+        {
+          type: "Corredor",
+          name: "Corredor Charles de Gaulle",
+          fare: "RD$ 35.00 (pago electrónico / tarjeta / contactless)",
+          schedule: "5:30 AM – 10:30 PM",
+          stops:
+            "Puente Juan Carlos (Autopista Las Américas) → San Isidro → Invivienda → Cancino → Sabana Perdida → Puente Gregorio Luperón → Villa Mella (Estación Mamá Tingó).",
+        },
+        {
+          type: "OMSA",
+          name: "Corredor 27 de Febrero (OMSA)",
+          fare: "RD$ 15.00 – RD$ 35.00",
+          schedule: "6:00 AM – 10:00 PM",
+          stops:
+            "Pintura (Prolongación 27 de Febrero) → Av. Luperón → Av. Núñez de Cáceres → Av. Winston Churchill → Av. Máximo Gómez → Puente Duarte → Av. Las Américas / Boca Chica.",
+        },
+      ];
+    </script>
+    <script>
+      /* ---------- Tema ---------- */
+      const themeToggle = document.getElementById("themeToggle");
+
+      function systemPrefersDark() {
+        return (
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+        );
+      }
+
+      function applyTheme(theme) {
+        if (theme) document.documentElement.setAttribute("data-theme", theme);
+        else document.documentElement.removeAttribute("data-theme");
+
+        const effectiveDark = theme ? theme === "dark" : systemPrefersDark();
+        themeToggle.textContent = effectiveDark ? "Modo claro" : "Modo oscuro";
+      }
+
+      let savedTheme = null;
+      try {
+        savedTheme = localStorage.getItem("pulsoRdTheme");
+      } catch (e) {}
+
+      applyTheme(savedTheme);
+
+      themeToggle.addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme");
+        const currentlyDark = current
+          ? current === "dark"
+          : systemPrefersDark();
+        const next = currentlyDark ? "light" : "dark";
+
+        applyTheme(next);
+        try {
+          localStorage.setItem("pulsoRdTheme", next);
+        } catch (e) {}
+      });
+
+      function formatMoney(n, symbol) {
+        return (
+          symbol +
+          " " +
+          n.toLocaleString("es-DO", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        );
+      }
+
+      /* ---------- Ticker dinámico ---------- */
+      const tickerRow = document.getElementById("tickerRow");
+
+      const bestUsdBuy = Math.max(...rates.USD.map((b) => b.buy));
+      const bestUsdSell = Math.min(...rates.USD.map((b) => b.sell));
+      const bestEurBuy = Math.max(...rates.EUR.map((b) => b.buy));
+      const bestEurSell = Math.min(...rates.EUR.map((b) => b.sell));
+      const premFuel = fuels.find((f) => f.id === "premium") || fuels[0];
+
+      tickerRow.innerHTML = `
+  <a class="tick" href="#divisas">
+    <div class="label">Dólar (mejor tasa)</div>
+    <div class="pair">
+      <span class="v">${bestUsdBuy.toFixed(2)}<span class="k">Compra</span></span>
+      <span class="v">${bestUsdSell.toFixed(2)}<span class="k">Venta</span></span>
+    </div>
+  </a>
+
+  <a class="tick" href="#divisas">
+    <div class="label">Euro (mejor tasa)</div>
+    <div class="pair">
+      <span class="v">${bestEurBuy.toFixed(2)}<span class="k">Compra</span></span>
+      <span class="v">${bestEurSell.toFixed(2)}<span class="k">Venta</span></span>
+    </div>
+  </a>
+
+  <a class="tick" href="#combustibles">
+    <div class="label">${premFuel.name}</div>
+    <div class="pair">
+      <span class="v">${premFuel.price.toFixed(2)}<span class="k">RD$/galón</span></span>
+    </div>
+  </a>
+
+  <a class="tick" href="#intrant">
+    <div class="label">Examen INTRANT</div>
+    <div class="pair">
+      <span class="v">${intrantQuestions.length}<span class="k">Preguntas</span></span>
+    </div>
+  </a>
+
+  <a class="tick" href="#transporte">
+    <div class="label">Transporte SDQ</div>
+    <div class="pair">
+      <span class="v">${transportRoutes.length}<span class="k">Rutas</span></span>
+    </div>
+  </a>
+`;
+
+      /* ---------- 01 Divisas ---------- */
+      document.getElementById("updatedNote").textContent =
+        `Actualizado: ${UPDATED_AT}`;
+
+      const dState = { dir: "buy", cur: "USD" };
+      let amountTouched = false;
+
+      const bankSelect = document.getElementById("bank");
+      const bankList = document.getElementById("bankList");
+      const amountInput = document.getElementById("amount");
+      const amountLabel = document.getElementById("amountLabel");
+      const resultLabel = document.getElementById("resultLabel");
+      const resultValue = document.getElementById("resultValue");
+      const dirToggle = document.getElementById("dirToggle");
+      const curToggle = document.getElementById("curToggle");
+      const shareBtn = document.getElementById("shareBtn");
+
+      amountInput.addEventListener("input", () => {
+        amountTouched = true;
+        calc();
+      });
+
+      function renderDivisas() {
+        const list = rates[dState.cur];
+        const op = dState.dir;
+
+        const best = list.reduce((a, b) =>
+          op === "buy" ? (b.buy > a.buy ? b : a) : b.sell < a.sell ? b : a,
+        );
+
+        bankSelect.innerHTML = "";
+        bankList.innerHTML = "";
+
+        list.forEach((b) => {
+          const opt = document.createElement("option");
+          opt.value = b.name;
+          opt.textContent = `${b.name} — ${b[op].toFixed(2)}`;
+          bankSelect.appendChild(opt);
+
+          const row = document.createElement("div");
+          row.className = "bank-row" + (b.name === best.name ? " best" : "");
+          row.innerHTML = `<span class="name">${b.name}</span><span class="num${op === "buy" ? " used" : ""}">${b.buy.toFixed(2)}</span><span class="num${op === "sell" ? " used" : ""}">${b.sell.toFixed(2)}</span>`;
+
+          bankList.appendChild(row);
+        });
+
+        bankSelect.value = best.name;
+
+        if (!amountTouched) amountInput.value = op === "buy" ? 100 : 5000;
+
+        if (op === "buy") {
+          amountLabel.textContent = `Monto en ${dState.cur}`;
+          resultLabel.textContent = "Recibes en pesos dominicanos";
+        } else {
+          amountLabel.textContent = "Monto en pesos dominicanos (DOP)";
+          resultLabel.textContent = `Recibes en ${dState.cur}`;
+        }
+
+        calc();
+      }
+
+      let lastSummary = "";
+
+      function calc() {
+        const amount = parseFloat(amountInput.value) || 0;
+        const bank = rates[dState.cur].find((b) => b.name === bankSelect.value);
+        const rate = bank ? bank[dState.dir] : 0;
+        const bankName = bank ? bank.name : "";
+
+        if (dState.dir === "buy") {
+          const out = amount * rate;
+          resultValue.textContent = formatMoney(out, "RD$");
+          lastSummary = `${amount} ${dState.cur} = ${formatMoney(out, "RD$")} en ${bankName} (tasa ${rate.toFixed(2)}) — vía Pulso RD`;
+        } else {
+          const symbol = dState.cur === "USD" ? "US$" : "€";
+          const out = rate ? amount / rate : 0;
+          resultValue.textContent = formatMoney(out, symbol);
+          lastSummary = `${formatMoney(amount, "RD$")} = ${formatMoney(out, symbol)} en ${bankName} (tasa ${rate.toFixed(2)}) — vía Pulso RD`;
+        }
+      }
+
+      dirToggle.addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-dir]");
+        if (!btn) return;
+        dState.dir = btn.dataset.dir;
+        [...dirToggle.children].forEach((b) =>
+          b.classList.toggle("active", b === btn),
+        );
+        renderDivisas();
+      });
+
+      curToggle.addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-cur]");
+        if (!btn) return;
+        dState.cur = btn.dataset.cur;
+        [...curToggle.children].forEach((b) =>
+          b.classList.toggle("active", b === btn),
+        );
+        renderDivisas();
+      });
+
+      bankSelect.addEventListener("change", calc);
+
+      shareBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(lastSummary);
+        } catch (e) {}
+        shareBtn.textContent = "Copiado ✓";
+        shareBtn.classList.add("copied");
+        setTimeout(() => {
+          shareBtn.textContent = "Copiar resumen";
+          shareBtn.classList.remove("copied");
+        }, 1800);
+      });
+
+      renderDivisas();
+
+      /* ---------- 02 Combustibles y Peajes ---------- */
+      document.getElementById("fuelWeekNote").textContent = FUEL_WEEK_LABEL;
+
+      const fuelTable = document.getElementById("fuelTable");
+      const fuelType = document.getElementById("fuelType");
+
+      fuels.forEach((f) => {
+        const row = document.createElement("div");
+        row.className = "fuel-row";
+        row.innerHTML = `<span>${f.name}</span><span class="price">RD$ ${f.price.toFixed(2)}<span class="unit"> /galón</span></span>`;
+        fuelTable.appendChild(row);
+
+        const opt = document.createElement("option");
+        opt.value = f.id;
+        opt.textContent = f.name;
+        fuelType.appendChild(opt);
+      });
+
+      const fuelModeToggle = document.getElementById("fuelModeToggle");
+      const fuelAmountLabel = document.getElementById("fuelAmountLabel");
+      const fuelAmount = document.getElementById("fuelAmount");
+      const fuelResultLabel = document.getElementById("fuelResultLabel");
+      const fuelResultValue = document.getElementById("fuelResultValue");
+
+      let fuelMode = "byAmount";
+
+      function fuelCalc() {
+        const f = fuels.find((x) => x.id === fuelType.value);
+        const val = parseFloat(fuelAmount.value) || 0;
+
+        if (fuelMode === "byAmount") {
+          fuelResultLabel.textContent = "Galones aproximados";
+          fuelResultValue.textContent = (
+            f.price ? val / f.price : 0
+          ).toLocaleString("es-DO", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        } else {
+          fuelResultLabel.textContent = "Pagas aproximadamente";
+          fuelResultValue.textContent = formatMoney(val * f.price, "RD$");
+        }
+      }
+
+      const tripKm = document.getElementById("tripKm");
+      const tripEff = document.getElementById("tripEff");
+      const tripTolls = document.getElementById("tripTolls");
+      const tripBreakdown = document.getElementById("tripBreakdown");
+      const tripResultValue = document.getElementById("tripResultValue");
+      const tripShareBtn = document.getElementById("tripShareBtn");
+      const routeChips = document.getElementById("routeChips");
+      const engineChips = document.getElementById("engineChips");
+
+      let lastTripSummary = "";
+
+      popularRoutes.forEach((r) => {
+        const b = document.createElement("button");
+        b.className = "chip";
+        b.type = "button";
+        b.textContent = `${r.label} (${r.km} km)`;
+        b.title = r.tollNote;
+        b.addEventListener("click", () => {
+          tripKm.value = r.km;
+          tripTolls.value = r.tollsRoundTrip;
+          tripCalc();
+        });
+        routeChips.appendChild(b);
+      });
+
+      enginePresets.forEach((e) => {
+        const b = document.createElement("button");
+        b.className = "chip";
+        b.type = "button";
+        b.textContent = `${e.label} (${e.kmPerGallon} km/g)`;
+        b.addEventListener("click", () => {
+          tripEff.value = e.kmPerGallon;
+          tripCalc();
+        });
+        engineChips.appendChild(b);
+      });
+
+      function tripCalc() {
+        const f = fuels.find((x) => x.id === fuelType.value);
+        const km = parseFloat(tripKm.value) || 0;
+        const eff = parseFloat(tripEff.value) || 1;
+        const tolls = parseFloat(tripTolls.value) || 0;
+        const gallons = km / eff;
+        const gasCost = gallons * f.price;
+        const total = gasCost + tolls;
+
+        tripBreakdown.textContent = `Gasolina: ${formatMoney(gasCost, "RD$")} + Peajes: ${formatMoney(tolls, "RD$")}`;
+        tripResultValue.textContent = formatMoney(total, "RD$");
+        lastTripSummary = `Viaje de ${km} km (${f.name}): ${formatMoney(gasCost, "RD$")} gasolina + ${formatMoney(tolls, "RD$")} peajes = Total ${formatMoney(total, "RD$")} — vía Pulso RD`;
+      }
+
+      tripShareBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(lastTripSummary);
+        } catch (e) {}
+        tripShareBtn.textContent = "Copiado ✓";
+        tripShareBtn.classList.add("copied");
+        setTimeout(() => {
+          tripShareBtn.textContent = "Copiar resumen";
+          tripShareBtn.classList.remove("copied");
+        }, 1800);
+      });
+
+      const tollTableBody = document.getElementById("tollTableBody");
+      let lastCorridor = "";
+      tollsData.forEach((t) => {
+        if (t.corridor !== lastCorridor) {
+          lastCorridor = t.corridor;
+          const trHead = document.createElement("tr");
+          trHead.className = "toll-corridor";
+          trHead.innerHTML = `<td colspan="6">Corredor ${t.corridor}</td>`;
+          tollTableBody.appendChild(trHead);
+        }
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+    <td>${t.name}</td>
+    <td><strong>RD$ ${t.cat1}</strong></td>
+    <td>RD$ ${t.cat2}</td>
+    <td>RD$ ${t.cat3}</td>
+    <td>RD$ ${t.cat4}</td>
+    <td>RD$ ${t.cat5}</td>
+  `;
+        tollTableBody.appendChild(tr);
+      });
+
+      fuelType.addEventListener("change", () => {
+        fuelCalc();
+        tripCalc();
+      });
+      fuelAmount.addEventListener("input", fuelCalc);
+      tripKm.addEventListener("input", tripCalc);
+      tripEff.addEventListener("input", tripCalc);
+      tripTolls.addEventListener("input", tripCalc);
+
+      fuelModeToggle.addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-mode]");
+        if (!btn) return;
+        fuelMode = btn.dataset.mode;
+        [...fuelModeToggle.children].forEach((b) =>
+          b.classList.toggle("active", b === btn),
+        );
+        if (fuelMode === "byAmount") {
+          fuelAmountLabel.textContent = "Monto en RD$";
+          fuelAmount.value = 1000;
+        } else {
+          fuelAmountLabel.textContent = "Cantidad de galones";
+          fuelAmount.value = 10;
+        }
+        fuelCalc();
+      });
+
+      fuelCalc();
+      tripCalc();
+
+      /* ---------- 03 Simulador INTRANT ---------- */
+      const quizBox = document.getElementById("quizBox");
+      const quizProgress = document.getElementById("quizProgress");
+      const QUIZ_SIZE = intrantQuestions.length;
+
+      function shuffle(a) {
+        const b = [...a];
+        for (let i = b.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [b[i], b[j]] = [b[j], b[i]];
+        }
+        return b;
+      }
+
+      let quizSet = shuffle(intrantQuestions).slice(0, QUIZ_SIZE);
+      let qIdx = 0;
+      let score = 0;
+
+      function renderQuestion() {
+        if (qIdx >= quizSet.length) {
+          const pct = Math.round((score / quizSet.length) * 100);
+          const passed = pct >= 70;
+          quizProgress.textContent = "Resultado final";
+          quizBox.innerHTML = `
+      <div class="quiz-q">${passed ? "¡Aprobado!" : "Necesitas repasar un poco más"}</div>
+      <p class="section-sub">Obtuviste <strong>${score} de ${quizSet.length}</strong> respuestas correctas (${pct}%). El mínimo para aprobar suele ser 70%.</p>
+      <button class="quizBtn" id="restartQuiz">Intentar de nuevo</button>
+    `;
+          document
+            .getElementById("restartQuiz")
+            .addEventListener("click", () => {
+              quizSet = shuffle(intrantQuestions).slice(0, QUIZ_SIZE);
+              qIdx = 0;
+              score = 0;
+              renderQuestion();
+            });
+          return;
+        }
+
+        const item = quizSet[qIdx];
+        quizProgress.textContent = `Pregunta ${qIdx + 1} de ${quizSet.length}`;
+        quizBox.innerHTML = `
+    <div class="quiz-q">${item.q}</div>
+    <div class="quiz-opts">
+      ${item.options.map((opt, i) => `<button class="quiz-opt" data-i="${i}">${opt}</button>`).join("")}
+    </div>
+    <div id="quizFeedback"></div>
+  `;
+
+        const opts = quizBox.querySelectorAll(".quiz-opt");
+        opts.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const chosen = Number(btn.dataset.i);
+            opts.forEach((b) => (b.disabled = true));
+            if (chosen === item.correct) {
+              btn.classList.add("ok");
+              score++;
+            } else {
+              btn.classList.add("bad");
+              opts[item.correct].classList.add("ok");
+            }
+            document.getElementById("quizFeedback").innerHTML = `
+        <div class="quiz-explain">${item.explain}</div>
+        <button class="quizBtn" id="nextQ">${qIdx + 1 < quizSet.length ? "Siguiente pregunta" : "Ver resultado"}</button>
+      `;
+            document.getElementById("nextQ").addEventListener("click", () => {
+              qIdx++;
+              renderQuestion();
+            });
+          });
+        });
+      }
+
+      renderQuestion();
+
+      /* ---------- 04 Transporte Público ---------- */
+      const routeList = document.getElementById("routeList");
+      const transportFilter = document.getElementById("transportFilter");
+      const transportSearch = document.getElementById("transportSearch");
+
+      let activeTransportType = "ALL";
+
+      function renderRoutes() {
+        const query = transportSearch.value.trim().toLowerCase();
+        const filtered = transportRoutes.filter((r) => {
+          const matchesType =
+            activeTransportType === "ALL" || r.type === activeTransportType;
+          const haystack = `${r.type} ${r.name} ${r.stops}`.toLowerCase();
+          return matchesType && haystack.includes(query);
+        });
+
+        if (filtered.length === 0) {
+          routeList.innerHTML = `<div class="route-empty">No se encontraron rutas con "${transportSearch.value}". Prueba con otra avenida o parada.</div>`;
+          return;
+        }
+
+        routeList.innerHTML = filtered
+          .map(
+            (r) => `
+      <article class="route-card">
+        <div class="route-top">
+          <span class="route-badge">${r.type}</span>
+          <span class="route-fare">${r.fare}</span>
+        </div>
+        <div class="route-title">${r.name}</div>
+        <p class="route-stops"><strong>Recorrido / Paradas:</strong> ${r.stops}</p>
+        <div class="route-sched">Horario: ${r.schedule}</div>
+      </article>
+    `,
+          )
+          .join("");
+      }
+
+      transportFilter.addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-type]");
+        if (!btn) return;
+        activeTransportType = btn.dataset.type;
+        [...transportFilter.children].forEach((b) =>
+          b.classList.toggle("active", b === btn),
+        );
+        renderRoutes();
+      });
+
+      transportSearch.addEventListener("input", renderRoutes);
+      renderRoutes();
+    </script>
   </body>
 </html>
