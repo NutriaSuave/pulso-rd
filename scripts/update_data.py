@@ -1,9 +1,9 @@
 import json
 import re
+import ssl
 import urllib.request
 from datetime import datetime, timezone, timedelta
 
-# Hora actual en República Dominicana (UTC-4)
 rd_tz = timezone(timedelta(hours=-4))
 now_rd = datetime.now(rd_tz)
 
@@ -13,19 +13,24 @@ meses = [
 ]
 updated_str = f"{now_rd.day} {meses[now_rd.month - 1]} {now_rd.year}, {now_rd.strftime('%I:%M %p')}"
 
-def fetch_json(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "PulsoRD-Bot/1.0"})
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        return json.loads(resp.read().decode("utf-8"))
+def fetch_url(url):
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+    req = urllib.request.Request(
+        url,
+        headers={"User-Agent": "Mozilla/5.0 (PulsoRD-Bot/1.0)"}
+    )
+    with urllib.request.urlopen(req, timeout=20, context=ctx) as resp:
+        return resp.read().decode("utf-8", errors="ignore")
 
-# Obtener tasas base USD -> DOP y EUR -> DOP desde API pública abierta
-usd_data = fetch_json("https://open.er-api.com/v6/latest/USD")
-eur_data = fetch_json("https://open.er-api.com/v6/latest/EUR")
+# 1. Actualizar tasas USD y EUR
+usd_data = json.loads(fetch_url("https://open.er-api.com/v6/latest/USD"))
+eur_data = json.loads(fetch_url("https://open.er-api.com/v6/latest/EUR"))
 
 usd_ref = round(float(usd_data["rates"]["DOP"]), 2)
 eur_ref = round(float(eur_data["rates"]["DOP"]), 2)
 
-# Calcular márgenes referenciales realistas por entidad respecto a la tasa de referencia
 banks_usd = [
     {"name": "Banreservas",   "buy": round(usd_ref - 0.55, 2), "sell": round(usd_ref + 0.35, 2)},
     {"name": "Banco Popular", "buy": round(usd_ref - 0.30, 2), "sell": round(usd_ref + 0.60, 2)},
@@ -42,6 +47,9 @@ banks_eur = [
     {"name": "Vimenca",       "buy": round(eur_ref - 0.70, 2), "sell": round(eur_ref + 0.85, 2)},
 ]
 
+with open("data.js", "r", encoding="utf-8") as f:
+    content = f.read()
+
 new_rates_block = f"""const UPDATED_AT = "{updated_str}";
 
 const rates = {{
@@ -49,17 +57,55 @@ const rates = {{
   EUR: {json.dumps(banks_eur, indent=4)},
 }};"""
 
-with open("data.js", "r", encoding="utf-8") as f:
-    content = f.read()
-
-# Reemplazar solo UPDATED_AT y el objeto rates sin tocar combustibles, INTRANT, transporte ni universidades
-pattern = r'const UPDATED_AT\s*=\s*"[^"]*";\s*const rates\s*=\s*\{[\s\S]*?\n\};'
-if not re.search(pattern, content):
+pattern_rates = r'const UPDATED_AT\s*=\s*"[^"]*";\s*const rates\s*=\s*\{[\s\S]*?\n\};'
+if not re.search(pattern_rates, content):
     raise RuntimeError("No se encontró el bloque UPDATED_AT / rates en data.js")
 
-updated_content = re.sub(pattern, new_rates_block, content, count=1)
+content = re.sub(pattern_rates, new_rates_block, content, count=1)
+
+# 2. Intentar actualizar precios de combustibles desde MICM (especialmente los viernes)
+def try_update_fuels(js_text):
+    try:
+        html = fetch_url("https://micm.gob.do/")
+        text = re.sub(r"<[^>]+>", " ", html)
+        text = re.sub(r"\s+", " ", text)
+
+        fuel_patterns = [
+            ("premium",   "Gasolina Premium",    r"Gasolina\s+Premium[^0-9]{0,40}(\d{3}\.\d{2})"),
+            ("regular",   "Gasolina Regular",    r"Gasolina\s+Regular[^0-9]{0,40}(\d{3}\.\d{2})"),
+            ("optimo",    "Gasoil Óptimo",       r"Gasoil\s+[ÓO]ptimo[^0-9]{0,40}(\d{3}\.\d{2})"),
+            ("gasoilReg", "Gasoil Regular",      r"Gasoil\s+Regular[^0-9]{0,40}(\d{3}\.\d{2})"),
+            ("glp",       "GLP (gas vehicular)", r"(?:Gas\s+Licuado|GLP)[^0-9]{0,50}(\d{3}\.\d{2})"),
+        ]
+
+        parsed_fuels = []
+        for fid, fname, pat in fuel_patterns:
+            m = re.search(pat, text, re.IGNORECASE)
+            if not m:
+                print(f"No se pudo extraer {fname} del HTML del MICM; se conservan precios actuales.")
+                return js_text
+            parsed_fuels.append({"id": fid, "name": fname, "price": float(m.group(1))})
+
+        days_since_sat = (now_rd.weekday() + 2) % 7
+        sat = now_rd - timedelta(days=days_since_sat)
+        fri = sat + timedelta(days=6)
+        week_label = f"Semana del {sat.day} {meses[sat.month - 1]} al {fri.day} {meses[fri.month - 1]} {fri.year}"
+
+        new_fuels_block = f"""const fuels = {json.dumps(parsed_fuels, indent=2, ensure_ascii=False)};
+
+const FUEL_WEEK_LABEL = "{week_label}";"""
+
+        pat_fuels = r'const fuels\s*=\s*\[[\s\S]*?\];\s*const FUEL_WEEK_LABEL\s*=\s*"[^"]*";'
+        if re.search(pat_fuels, js_text):
+            js_text = re.sub(pat_fuels, new_fuels_block, js_text, count=1)
+            print(f"Combustibles actualizados desde MICM: {week_label}")
+    except Exception as e:
+        print(f"Aviso MICM (se mantienen precios vigentes): {e}")
+    return js_text
+
+content = try_update_fuels(content)
 
 with open("data.js", "w", encoding="utf-8") as f:
-    f.write(updated_content)
+    f.write(content)
 
-print(f"Actualizado correctamente: {updated_str} | USD ref: {usd_ref} | EUR ref: {eur_ref}")
+print(f"Actualización completada: {updated_str} | USD ref: {usd_ref} | EUR ref: {eur_ref}")
