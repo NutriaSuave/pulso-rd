@@ -1,20 +1,60 @@
-const UPDATED_AT = "26 nov 2026, 11:00 AM";
+const UPDATED_AT = "26 nov 2026, 03:25 PM";
 
 const rates = {
   USD: [
-    { name: "Banreservas", buy: 61.2, sell: 62.0 },
-    { name: "Banco Popular", buy: 61.5, sell: 62.3 },
-    { name: "BHD", buy: 61.35, sell: 62.15 },
-    { name: "Qik", buy: 61.6, sell: 62.1 },
-    { name: "Vimenca", buy: 61.55, sell: 62.05 },
-  ],
+    {
+        "name": "Banreservas",
+        "buy": 59.27,
+        "sell": 60.17
+    },
+    {
+        "name": "Banco Popular",
+        "buy": 59.52,
+        "sell": 60.42
+    },
+    {
+        "name": "BHD",
+        "buy": 59.42,
+        "sell": 60.27
+    },
+    {
+        "name": "Qik",
+        "buy": 59.62,
+        "sell": 60.17
+    },
+    {
+        "name": "Vimenca",
+        "buy": 59.57,
+        "sell": 60.12
+    }
+],
   EUR: [
-    { name: "Banreservas", buy: 66.1, sell: 68.4 },
-    { name: "Banco Popular", buy: 66.7, sell: 68.1 },
-    { name: "BHD", buy: 66.4, sell: 68.25 },
-    { name: "Qik", buy: 66.8, sell: 67.95 },
-    { name: "Vimenca", buy: 66.55, sell: 68.05 },
-  ],
+    {
+        "name": "Banreservas",
+        "buy": 64.32,
+        "sell": 66.62
+    },
+    {
+        "name": "Banco Popular",
+        "buy": 64.82,
+        "sell": 66.32
+    },
+    {
+        "name": "BHD",
+        "buy": 64.57,
+        "sell": 66.47
+    },
+    {
+        "name": "Qik",
+        "buy": 64.92,
+        "sell": 66.17
+    },
+    {
+        "name": "Vimenca",
+        "buy": 64.72,
+        "sell": 66.27
+    }
+],
 };
 
 const fuels = [
