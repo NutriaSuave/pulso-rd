@@ -17,7 +17,6 @@ function applyTheme(theme) {
 }
 
 let savedTheme = null;
-
 try {
   savedTheme = localStorage.getItem("pulsoRdTheme");
 } catch (e) {}
@@ -30,7 +29,6 @@ themeToggle.addEventListener("click", () => {
   const next = currentlyDark ? "light" : "dark";
 
   applyTheme(next);
-
   try {
     localStorage.setItem("pulsoRdTheme", next);
   } catch (e) {}
@@ -179,26 +177,20 @@ function calc() {
 dirToggle.addEventListener("click", (e) => {
   const btn = e.target.closest("button[data-dir]");
   if (!btn) return;
-
   dState.dir = btn.dataset.dir;
-
   [...dirToggle.children].forEach((b) =>
     b.classList.toggle("active", b === btn),
   );
-
   renderDivisas();
 });
 
 curToggle.addEventListener("click", (e) => {
   const btn = e.target.closest("button[data-cur]");
   if (!btn) return;
-
   dState.cur = btn.dataset.cur;
-
   [...curToggle.children].forEach((b) =>
     b.classList.toggle("active", b === btn),
   );
-
   renderDivisas();
 });
 
@@ -208,10 +200,8 @@ shareBtn.addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(lastSummary);
   } catch (e) {}
-
   shareBtn.textContent = "Copiado ✓";
   shareBtn.classList.add("copied");
-
   setTimeout(() => {
     shareBtn.textContent = "Copiar resumen";
     shareBtn.classList.remove("copied");
@@ -220,7 +210,7 @@ shareBtn.addEventListener("click", async () => {
 
 renderDivisas();
 
-/* ---------- 02 Combustibles ---------- */
+/* ---------- 02 Combustibles y Peajes ---------- */
 document.getElementById("fuelWeekNote").textContent = FUEL_WEEK_LABEL;
 
 const fuelTable = document.getElementById("fuelTable");
@@ -308,7 +298,6 @@ function tripCalc() {
   tripResultValue.textContent = formatMoney(total, "RD$");
 }
 
-// Renderizar tabla oficial de los 17 peajes
 const tollTableBody = document.getElementById("tollTableBody");
 let lastCorridor = "";
 tollsData.forEach((t) => {
@@ -367,12 +356,10 @@ const QUIZ_SIZE = 10;
 
 function shuffle(a) {
   const b = [...a];
-
   for (let i = b.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [b[i], b[j]] = [b[j], b[i]];
   }
-
   return b;
 }
 
@@ -384,28 +371,23 @@ function renderQuestion() {
   if (qIdx >= quizSet.length) {
     const pct = Math.round((score / quizSet.length) * 100);
     const passed = pct >= 70;
-
     quizProgress.textContent = "Resultado final";
-
     quizBox.innerHTML = `
       <div class="quiz-q">${passed ? "¡Aprobado!" : "Necesitas repasar un poco más"}</div>
       <p class="section-sub">Obtuviste <strong>${score} de ${quizSet.length}</strong> respuestas correctas (${pct}%). El mínimo para aprobar suele ser 70%.</p>
       <button class="quizBtn" id="restartQuiz">Intentar de nuevo</button>
     `;
-
     document.getElementById("restartQuiz").addEventListener("click", () => {
       quizSet = shuffle(intrantQuestions).slice(0, QUIZ_SIZE);
       qIdx = 0;
       score = 0;
       renderQuestion();
     });
-
     return;
   }
 
   const item = quizSet[qIdx];
   quizProgress.textContent = `Pregunta ${qIdx + 1} de ${quizSet.length}`;
-
   quizBox.innerHTML = `
     <div class="quiz-q">${item.q}</div>
     <div class="quiz-opts">
@@ -415,13 +397,10 @@ function renderQuestion() {
   `;
 
   const opts = quizBox.querySelectorAll(".quiz-opt");
-
   opts.forEach((btn) => {
     btn.addEventListener("click", () => {
       const chosen = Number(btn.dataset.i);
-
       opts.forEach((b) => (b.disabled = true));
-
       if (chosen === item.correct) {
         btn.classList.add("ok");
         score++;
@@ -429,12 +408,10 @@ function renderQuestion() {
         btn.classList.add("bad");
         opts[item.correct].classList.add("ok");
       }
-
       document.getElementById("quizFeedback").innerHTML = `
         <div class="quiz-explain">${item.explain}</div>
         <button class="quizBtn" id="nextQ">${qIdx + 1 < quizSet.length ? "Siguiente pregunta" : "Ver resultado"}</button>
       `;
-
       document.getElementById("nextQ").addEventListener("click", () => {
         qIdx++;
         renderQuestion();
@@ -445,41 +422,6 @@ function renderQuestion() {
 
 renderQuestion();
 
-/* ---------- 05 Universidades ---------- */
-const uniSearch = document.getElementById("uniSearch");
-const uniFilter = document.getElementById("uniFilter");
-const uniList = document.getElementById("uniList");
-
-function renderUnis() {
-  const q = uniSearch.value.trim().toLowerCase();
-  const type = uniFilter.value;
-
-  uniList.innerHTML = "";
-
-  const found = universities.filter(
-    (u) =>
-      (type === "all" || u.type === type) &&
-      `${u.name} ${u.city} ${u.areas.join(" ")}`.toLowerCase().includes(q),
-  );
-
-  if (!found.length) {
-    uniList.innerHTML = `<div class="compact-row"><span>Sin resultados</span></div>`;
-    return;
-  }
-
-  found.forEach((u) => {
-    const row = document.createElement("div");
-    row.className = "compact-row";
-    row.innerHTML = `<span>${u.name}<span class="meta">${u.city}${u.areas.length ? " · " + u.areas.join(", ") : ""}</span></span><span class="status">${u.type}</span>`;
-
-    uniList.appendChild(row);
-  });
-}
-
-uniSearch.addEventListener("input", renderUnis);
-uniFilter.addEventListener("change", renderUnis);
-renderUnis();
-
 /* ---------- 04 Transporte Público ---------- */
 const routeList = document.getElementById("routeList");
 const transportFilter = document.getElementById("transportFilter");
@@ -489,13 +431,10 @@ let activeTransportType = "ALL";
 
 function renderRoutes() {
   const query = transportSearch.value.trim().toLowerCase();
-
   const filtered = transportRoutes.filter((r) => {
     const matchesType =
       activeTransportType === "ALL" || r.type === activeTransportType;
-
     const haystack = `${r.type} ${r.name} ${r.stops}`.toLowerCase();
-
     return matchesType && haystack.includes(query);
   });
 
@@ -524,13 +463,10 @@ function renderRoutes() {
 transportFilter.addEventListener("click", (e) => {
   const btn = e.target.closest("button[data-type]");
   if (!btn) return;
-
   activeTransportType = btn.dataset.type;
-
   [...transportFilter.children].forEach((b) =>
     b.classList.toggle("active", b === btn),
   );
-
   renderRoutes();
 });
 
