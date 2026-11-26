@@ -2,9 +2,7 @@ name: Actualizar datos Pulso RD
 
 on:
   schedule:
-    # Todos los días 9:00 AM y 3:00 PM hora RD (13:00 y 19:00 UTC)
     - cron: "0 13,19 * * *"
-    # Viernes 6:30 PM hora RD (22:30 UTC) para capturar precios semanales de combustibles MICM
     - cron: "30 22 * * 5"
   workflow_dispatch:
 
