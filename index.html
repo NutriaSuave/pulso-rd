@@ -6,7 +6,26 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <title>Pulso RD</title>
+    <title>Pulso RD — Divisas, Combustibles, INTRANT y Transporte en RD</title>
+    <meta
+      name="description"
+      content="Consulta las tasas del dólar y euro por banco en República Dominicana, precios semanales de combustibles, simulador teórico INTRANT, rutas de Metro/Corredores y universidades."
+    />
+    <meta name="theme-color" content="#16233D" />
+
+    <!-- Vista previa profesional al compartir en WhatsApp y redes -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pulso RD" />
+    <meta
+      property="og:title"
+      content="Pulso RD — Herramientas y datos del día a día dominicano"
+    />
+    <meta
+      property="og:description"
+      content="Comparador de tasas USD/EUR por banco, calculadora de combustibles y viajes, examen práctico INTRANT, rutas de transporte y guía universitaria en RD."
+    />
+    <meta property="og:url" content="https://nutriasuave.github.io/pulso-rd/" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -37,16 +56,21 @@
     </nav>
 
     <main class="wrap">
-      <!-- 01 — DIVISAS -->
       <section id="divisas">
         <div class="section-head">
           <h2>01 — Divisas</h2>
           <span class="note" id="updatedNote"></span>
         </div>
-        <p class="section-sub">
-          Compra = el banco te compra la divisa (recibes pesos). Venta = el
-          banco te vende la divisa (pagas en pesos).
-        </p>
+        <div class="section-sub">
+          <div>
+            <strong>Compra:</strong> el banco te compra la divisa (recibes
+            pesos).
+          </div>
+          <div>
+            <strong>Venta:</strong> el banco te vende la divisa (pagas en
+            pesos).
+          </div>
+        </div>
 
         <div class="toggles">
           <div class="toggle-group" id="dirToggle">
@@ -90,7 +114,6 @@
         </div>
       </section>
 
-      <!-- 02 — COMBUSTIBLES -->
       <section id="combustibles">
         <div class="section-head">
           <h2>02 — Combustibles</h2>
@@ -154,7 +177,6 @@
         </div>
       </section>
 
-      <!-- 03 — INTRANT -->
       <section id="intrant">
         <div class="section-head">
           <h2>03 — Simulador INTRANT</h2>
@@ -168,7 +190,6 @@
         <div class="quiz-box" id="quizBox"></div>
       </section>
 
-      <!-- 04 — TRANSPORTE -->
       <section id="transporte">
         <div class="section-head">
           <h2>04 — Transporte público</h2>
@@ -200,14 +221,12 @@
         <div class="route-list" id="routeList"></div>
       </section>
 
-      <!-- 05 — UNIVERSIDADES -->
       <section id="universidades">
         <div class="section-head">
           <h2>05 — Universidades y carreras</h2>
           <span class="note">República Dominicana</span>
         </div>
         <p class="section-sub">Busca por nombre, ciudad o área de estudio.</p>
-
         <div class="tools">
           <div class="field">
             <label for="uniSearch">Buscar</label>
@@ -226,7 +245,6 @@
             </select>
           </div>
         </div>
-
         <div class="compact-ledger" id="uniList"></div>
       </section>
     </main>
