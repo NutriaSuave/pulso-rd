@@ -1,60 +1,20 @@
-const UPDATED_AT = "26 nov 2026, 02:01 PM";
+const UPDATED_AT = "26 nov 2026, 11:00 AM";
 
 const rates = {
   USD: [
-    {
-        "name": "Banreservas",
-        "buy": 59.27,
-        "sell": 60.17
-    },
-    {
-        "name": "Banco Popular",
-        "buy": 59.52,
-        "sell": 60.42
-    },
-    {
-        "name": "BHD",
-        "buy": 59.42,
-        "sell": 60.27
-    },
-    {
-        "name": "Qik",
-        "buy": 59.62,
-        "sell": 60.17
-    },
-    {
-        "name": "Vimenca",
-        "buy": 59.57,
-        "sell": 60.12
-    }
-],
+    { name: "Banreservas", buy: 61.2, sell: 62.0 },
+    { name: "Banco Popular", buy: 61.5, sell: 62.3 },
+    { name: "BHD", buy: 61.35, sell: 62.15 },
+    { name: "Qik", buy: 61.6, sell: 62.1 },
+    { name: "Vimenca", buy: 61.55, sell: 62.05 },
+  ],
   EUR: [
-    {
-        "name": "Banreservas",
-        "buy": 64.32,
-        "sell": 66.62
-    },
-    {
-        "name": "Banco Popular",
-        "buy": 64.82,
-        "sell": 66.32
-    },
-    {
-        "name": "BHD",
-        "buy": 64.57,
-        "sell": 66.47
-    },
-    {
-        "name": "Qik",
-        "buy": 64.92,
-        "sell": 66.17
-    },
-    {
-        "name": "Vimenca",
-        "buy": 64.72,
-        "sell": 66.27
-    }
-],
+    { name: "Banreservas", buy: 66.1, sell: 68.4 },
+    { name: "Banco Popular", buy: 66.7, sell: 68.1 },
+    { name: "BHD", buy: 66.4, sell: 68.25 },
+    { name: "Qik", buy: 66.8, sell: 67.95 },
+    { name: "Vimenca", buy: 66.55, sell: 68.05 },
+  ],
 };
 
 const fuels = [
@@ -67,11 +27,200 @@ const fuels = [
 
 const FUEL_WEEK_LABEL = "Semana del 24 al 30 nov 2026";
 
+/* ---------- Los 17 Peajes Oficiales de RD Vial (Tarifas por pasada en RD$) ---------- */
+const tollsData = [
+  // Corredor Este
+  {
+    name: "Las Américas (Autopista Las Américas)",
+    corridor: "Este",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  {
+    name: "La Romana (Circunvalación de La Romana)",
+    corridor: "Este",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  {
+    name: "Coral 1 (Autopista del Coral)",
+    corridor: "Este",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  {
+    name: "Coral 2 (Autopista del Coral)",
+    corridor: "Este",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  // Corredor Nordeste (Samaná)
+  {
+    name: "Marbella (Autopista del Nordeste)",
+    corridor: "Nordeste",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  {
+    name: "Guaraguao (Autopista del Nordeste)",
+    corridor: "Nordeste",
+    cat1: 200,
+    cat2: 300,
+    cat3: 400,
+    cat4: 500,
+    cat5: 600,
+  },
+  {
+    name: "El Naranjal (Autopista del Nordeste)",
+    corridor: "Nordeste",
+    cat1: 200,
+    cat2: 300,
+    cat3: 400,
+    cat4: 500,
+    cat5: 600,
+  },
+  {
+    name: "El Catey (Bulevar Turístico del Atlántico)",
+    corridor: "Nordeste",
+    cat1: 400,
+    cat2: 1000,
+    cat3: 1300,
+    cat4: 1600,
+    cat5: 1900,
+  },
+  // Corredor Norte (Cibao)
+  {
+    name: "Duarte (Km 32 Autopista Duarte)",
+    corridor: "Norte",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  {
+    name: "Circunvalación Norte de Santiago",
+    corridor: "Norte",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  // Corredor Sur
+  {
+    name: "6 de Noviembre (Autopista 6 de Noviembre)",
+    corridor: "Sur",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  {
+    name: "Sánchez (Carretera Sánchez)",
+    corridor: "Sur",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  {
+    name: "Circunvalación de Azua",
+    corridor: "Sur",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  // Gran Santo Domingo
+  {
+    name: "Circunvalación Juan Bosch — Tramo 1",
+    corridor: "Santo Domingo",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  {
+    name: "Circunvalación Juan Bosch — Tramo 2",
+    corridor: "Santo Domingo",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  {
+    name: "Circunvalación Juan Bosch — Tramo 2B",
+    corridor: "Santo Domingo",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+  {
+    name: "Avenida Ecológica",
+    corridor: "Santo Domingo",
+    cat1: 100,
+    cat2: 200,
+    cat3: 300,
+    cat4: 400,
+    cat5: 600,
+  },
+];
+
+// km y peajes totales (ida y vuelta, Categoría 1)
 const popularRoutes = [
-  { label: "SDQ → Santiago", km: 310 },
-  { label: "SDQ → Punta Cana", km: 390 },
-  { label: "SDQ → Jarabacoa", km: 290 },
-  { label: "SDQ → Puerto Plata", km: 420 },
+  {
+    label: "SDQ → Santiago",
+    km: 310,
+    tollsRoundTrip: 200,
+    tollNote: "Peaje Duarte (RD$100 ida + RD$100 vuelta)",
+  },
+  {
+    label: "SDQ → Punta Cana",
+    km: 390,
+    tollsRoundTrip: 800,
+    tollNote: "4 peajes por vía: Las Américas, Romana, Coral 1 y 2",
+  },
+  {
+    label: "SDQ → Las Terrenas",
+    km: 315,
+    tollsRoundTrip: 1800,
+    tollNote: "4 peajes por vía: Marbella, Guaraguao, Naranjal y El Catey",
+  },
+  {
+    label: "SDQ → Puerto Plata",
+    km: 420,
+    tollsRoundTrip: 200,
+    tollNote: "Peaje Duarte (RD$100 ida + RD$100 vuelta)",
+  },
+  {
+    label: "SDQ → Barahona",
+    km: 374,
+    tollsRoundTrip: 400,
+    tollNote: "2 peajes por vía: 6 de Noviembre y Circunvalación Azua",
+  },
 ];
 
 const enginePresets = [
@@ -80,85 +229,64 @@ const enginePresets = [
   { label: "Jeepeta / SUV", kmPerGallon: 22 },
 ];
 
+/* ---------- 25 Preguntas Oficiales Examen Teórico INTRANT (Ley 63-17) ---------- */
 const intrantQuestions = [
   {
-    q: "¿Qué indica una señal triangular con borde rojo y fondo blanco?",
+    q: "¿A qué velocidad máxima está permitido circular en una zona escolar según el examen teórico del INTRANT?",
+    options: ["15 km/h", "20 km/h", "40 km/h", "50 km/h"],
+    correct: 1,
+    explain:
+      "El cuestionario oficial del INTRANT establece un límite máximo de 20 km/h en zonas escolares para proteger a los estudiantes.",
+  },
+  {
+    q: "¿Cuál es la velocidad máxima permitida en las avenidas de las zonas urbanas en República Dominicana, salvo señalización distinta?",
+    options: ["45 km/h", "60 km/h", "80 km/h", "100 km/h"],
+    correct: 1,
+    explain:
+      "Según la Ley 63-17, el límite general en zonas urbanas es de 60 km/h.",
+  },
+  {
+    q: "¿Cuál es el período de vigencia de la licencia de conducir de Categoría 02 antes de cumplir los 65 años de edad?",
+    options: ["2 años", "4 años", "5 años", "6 años"],
+    correct: 1,
+    explain:
+      "La licencia Categoría 02 tiene una vigencia de 4 años hasta los 65 años de edad; a partir de los 65 años pasa a renovarse cada 2 años.",
+  },
+  {
+    q: "¿Cuál es la tasa máxima de alcohol permitida a un conductor titular de un permiso de aprendizaje o transporte público?",
     options: [
-      "Prohibición",
-      "Advertencia o peligro",
-      "Información",
-      "Servicio turístico",
+      "0.0 miligramos por litro de aire espirado",
+      "0.2 miligramos por litro",
+      "0.5 miligramos por litro",
+      "0.8 miligramos por litro",
     ],
-    correct: 1,
+    correct: 0,
     explain:
-      "Las señales triangulares de borde rojo son preventivas: advierten sobre un peligro en la vía más adelante.",
+      "La Ley 63-17 exige tolerancia cero (0.0 mg/l) para conductores con permiso de aprendizaje, transporte público y vehículos de carga.",
   },
   {
-    q: "¿Qué indica una señal circular con borde rojo?",
+    q: "En una situación de aglomeración o para rebasar a otro vehículo, ¿está permitido circular por el paseo o arcén?",
     options: [
-      "Advertencia",
-      "Prohibición o restricción",
-      "Indicación obligatoria en azul",
-      "Servicio",
-    ],
-    correct: 1,
-    explain:
-      "El círculo con borde rojo representa una prohibición o restricción, como 'prohibido el paso' o límites de velocidad.",
-  },
-  {
-    q: "Según la Ley 63-17, ¿quién tiene prioridad de paso en una intersección sin señalización?",
-    options: [
-      "El vehículo más grande",
-      "El que llega por la derecha",
-      "El que toca bocina primero",
-      "El que va más rápido",
-    ],
-    correct: 1,
-    explain:
-      "En ausencia de señalización, la prioridad es para el vehículo que se aproxima por la derecha.",
-  },
-  {
-    q: "¿Cuál es el límite de velocidad general en zonas urbanas en República Dominicana, salvo señalización distinta?",
-    options: ["40 km/h", "60 km/h", "80 km/h", "100 km/h"],
-    correct: 1,
-    explain:
-      "Según la Ley 63-17, el límite general en zona urbana es de 60 km/h (y 40 km/h en zonas escolares o residenciales).",
-  },
-  {
-    q: "¿Qué color de semáforo en flecha indica que solo puedes avanzar en esa dirección?",
-    options: [
-      "Flecha roja",
-      "Flecha amarilla intermitente",
-      "Flecha verde",
-      "Cualquier color",
+      "Sí, si hay tapón",
+      "Sí, con luces intermitentes",
+      "No, está prohibido",
+      "Solo en autopistas",
     ],
     correct: 2,
     explain:
-      "La flecha verde habilita el movimiento exclusivamente en la dirección que señala.",
+      "Está terminantemente prohibido circular o rebasar utilizando el paseo o arcén; es exclusivo para emergencias.",
   },
   {
-    q: "¿Es obligatorio el uso del cinturón de seguridad para todos los pasajeros del vehículo?",
+    q: "¿Qué indican las líneas blancas continuas empleadas como líneas de carril en la vía?",
     options: [
-      "Solo el conductor",
-      "Solo asientos delanteros",
-      "Sí, para todos los ocupantes",
-      "Solo en carretera",
-    ],
-    correct: 2,
-    explain:
-      "La Ley 63-17 exige el uso del cinturón de seguridad para todos los ocupantes, sin importar el asiento.",
-  },
-  {
-    q: "¿Qué debes hacer al acercarte a un cruce escolar con niños presentes?",
-    options: [
-      "Mantener la velocidad",
-      "Reducir la velocidad y extremar precaución",
-      "Tocar la bocina para que se aparten",
-      "Acelerar para cruzar rápido",
+      "Se puede cambiar de carril con precaución",
+      "Está prohibido cambiarse de carril",
+      "Carril exclusivo de transporte pesado",
+      "Zona de estacionamiento permitido",
     ],
     correct: 1,
     explain:
-      "Cerca de centros escolares se debe reducir la velocidad y prestar máxima atención a los peatones.",
+      "Las líneas blancas continuas indican que está prohibido cambiarse de carril; el conductor debe mantenerse dentro de su carril.",
   },
   {
     q: "¿Qué significa una línea continua simple amarilla en el centro de la vía?",
@@ -170,33 +298,216 @@ const intrantQuestions = [
     ],
     correct: 1,
     explain:
-      "Una línea continua amarilla indica que está prohibido adelantar en ambos sentidos de circulación.",
+      "Una línea continua amarilla en el eje de la calzada prohíbe adelantar en ambos sentidos de circulación.",
   },
   {
-    q: "¿Qué documento es obligatorio portar al conducir en RD?",
+    q: "¿Qué indica una señal triangular con borde rojo y fondo blanco?",
     options: [
-      "Solo la cédula",
-      "Licencia de conducir vigente",
-      "Solo el seguro",
-      "Ninguno si el carro es propio",
+      "Prohibición absoluta",
+      "Advertencia o peligro",
+      "Información turística",
+      "Obligación",
     ],
     correct: 1,
     explain:
-      "Se debe portar la licencia de conducir vigente, además de los documentos del vehículo.",
+      "Las señales triangulares con borde rojo son preventivas: advierten sobre un peligro o condición especial más adelante en la vía.",
   },
   {
-    q: "¿Qué debes hacer si una ambulancia se aproxima con sirena encendida?",
+    q: "¿Qué indica una señal circular con borde rojo?",
     options: [
-      "Ignorarla si vas con prisa",
-      "Detenerte en seco donde estés",
-      "Ceder el paso moviéndote con precaución hacia un costado",
-      "Acelerar para no estorbar",
+      "Advertencia",
+      "Prohibición o restricción",
+      "Servicio auxiliar",
+      "Desvío",
+    ],
+    correct: 1,
+    explain:
+      "Las señales circulares con borde rojo indican prohibición o restricción (como límites de velocidad o prohibido girar).",
+  },
+  {
+    q: "Según la Ley 63-17, ¿quién tiene prioridad de paso en una intersección sin semáforos ni señalización?",
+    options: [
+      "El vehículo más grande",
+      "El vehículo que se aproxima por la derecha",
+      "El que toca bocina primero",
+      "El que circula más rápido",
+    ],
+    correct: 1,
+    explain:
+      "En intersecciones sin señalización, tiene preferencia de paso el vehículo que llega por la vía de la derecha.",
+  },
+  {
+    q: "Si al acercarnos a una intersección el semáforo cambia a luz amarilla fija, ¿qué debemos hacer?",
+    options: [
+      "Acelerar para cruzar antes de la roja",
+      "Detenernos antes de entrar a la intersección si es seguro hacerlo",
+      "Tocar bocina y seguir",
+      "Girar a la izquierda sin parar",
+    ],
+    correct: 1,
+    explain:
+      "La luz amarilla advierte que el paso está por cerrarse; el conductor debe detenerse antes de la línea de pare.",
+  },
+  {
+    q: "¿Cómo deben ser transportados los niños de hasta seis (6) años en un vehículo de motor?",
+    options: [
+      "En el asiento delantero con cinturón",
+      "En un asiento especial para infantes en el asiento trasero",
+      "En los brazos de un adulto",
+      "De pie detrás del conductor",
+    ],
+    correct: 1,
+    explain:
+      "La Ley 63-17 exige que los niños de hasta 6 años viajen en un sistema de retención infantil (asiento especial) homologado.",
+  },
+  {
+    q: "¿Es obligatorio el uso del cinturón de seguridad para todos los ocupantes del vehículo?",
+    options: [
+      "Solo para el conductor",
+      "Solo en los asientos delanteros",
+      "Sí, para todos los pasajeros en cualquier asiento",
+      "Solo fuera de la ciudad",
     ],
     correct: 2,
     explain:
-      "Debes ceder el paso de forma segura, moviéndote hacia el costado de la vía sin maniobras bruscas.",
+      "Todos los ocupantes del vehículo deben llevar abrochado el cinturón de seguridad en todo momento.",
+  },
+  {
+    q: "Hablar por el teléfono celular mientras se conduce utilizando un sistema de manos libres, ¿supone algún peligro?",
+    options: [
+      "No, es 100% seguro",
+      "Sí, porque se pierde capacidad de concentración al volante",
+      "Solo de noche",
+      "Solo si llueve",
+    ],
+    correct: 1,
+    explain:
+      "Aunque se use manos libres, mantener una conversación telefónica reduce la atención y el tiempo de reacción del conductor.",
+  },
+  {
+    q: "¿En qué horario es obligatorio encender las luces de cruce (cortas) junto a las luces de posición?",
+    options: [
+      "Solo después de medianoche",
+      "Entre el ocaso y la salida del sol en todas las vías",
+      "Solo en carreteras sin iluminación",
+      "Únicamente cuando llueve",
+    ],
+    correct: 1,
+    explain:
+      "Es obligatorio llevar encendidas las luces desde la puesta del sol (ocaso) hasta su salida, tanto en zona urbana como rural.",
+  },
+  {
+    q: "¿Cuál es la finalidad principal de las luces cortas o de cruce?",
+    options: [
+      "Alumbrar a larga distancia",
+      "Alumbrar la vía sin deslumbrar a los demás conductores",
+      "Sustituir las luces intermitentes",
+      "Señalizar estacionamiento",
+    ],
+    correct: 1,
+    explain:
+      "Las luces cortas iluminan la calzada delante del vehículo sin encandilar a quienes vienen en sentido contrario.",
+  },
+  {
+    q: "¿De qué color deben ser las luces cortas o de cruce delanteras de un vehículo?",
+    options: ["Amarillas o rojas", "Blancas", "Azules", "Verdes"],
+    correct: 1,
+    explain:
+      "Las luces frontales de cruce deben proyectar luz de color blanco.",
+  },
+  {
+    q: "¿Qué debe hacer el conductor cuando un vehículo de emergencia se aproxima con sirena o luces encendidas?",
+    options: [
+      "Acelerar delante de él",
+      "Tomar el carril derecho y reducir la velocidad hasta detenerse si es necesario",
+      "Detenerse en el centro de la vía",
+      "Ignorarlo si el semáforo está en verde",
+    ],
+    correct: 1,
+    explain:
+      "Se debe ceder el paso orillándose hacia la derecha con precaución y deteniéndose si hace falta.",
+  },
+  {
+    q: "¿En qué consiste el Sistema de Licencia por Puntos establecido por la Ley 63-17?",
+    options: [
+      "En dar descuentos en peajes por buen manejo",
+      "En otorgar un crédito de puntos que se van reduciendo al cometer infracciones",
+      "En sumar puntos para comprar vehículos",
+      "En exonerar multas antiguas",
+    ],
+    correct: 1,
+    explain:
+      "Cada titular recibe una cantidad de puntos que se descuentan según la gravedad de las infracciones cometidas.",
+  },
+  {
+    q: "Para mantener una posición correcta al volante, ¿cómo debe regularse el asiento del conductor?",
+    options: [
+      "Lo más pegado posible al guía",
+      "De modo que al pisar a fondo los pedales, las piernas queden ligeramente flexionadas",
+      "Totalmente reclinado hacia atrás",
+      "Con los brazos completamente estirados y rígidos",
+    ],
+    correct: 1,
+    explain:
+      "Las piernas deben quedar ligeramente flexionadas al pisar los pedales para tener control total y evitar lesiones en caso de impacto.",
+  },
+  {
+    q: "¿Qué se entiende por 'distancia de frenado'?",
+    options: [
+      "La distancia desde que ves el peligro hasta que pisas el freno",
+      "La distancia que recorre el vehículo desde que se pisa el freno hasta detenerse por completo",
+      "La separación mínima al estacionar",
+      "El ancho de una intersección",
+    ],
+    correct: 1,
+    explain:
+      "La distancia de frenado es el espacio recorrido desde el instante en que se acciona el pedal de freno hasta la detención total.",
+  },
+  {
+    q: "Para practicar un manejo preventivo seguro, ¿qué acciones son fundamentales?",
+    options: [
+      "Conducir siempre en el carril izquierdo",
+      "Observar constantemente la vía, anticipar maniobras y mantener distancia de seguimiento",
+      "Tocar bocina en cada esquina",
+      "Frenar bruscamente para probar los neumáticos",
+    ],
+    correct: 1,
+    explain:
+      "El manejo defensivo o preventivo se basa en anticiparse al entorno y conservar una distancia prudente respecto al vehículo delantero.",
+  },
+  {
+    q: "¿Qué función cumple la estructura del chasis y la carrocería moderna en caso de colisión?",
+    options: [
+      "Mantenerse completamente rígida sin deformarse",
+      "Absorber la energía cinética deformándose de manera controlada para proteger la cabina",
+      "Aumentar la velocidad del impacto",
+      "Evitar el uso del cinturón",
+    ],
+    correct: 1,
+    explain:
+      "Las zonas de deformación programada absorben la energía del choque para reducir la fuerza que llega a los ocupantes.",
+  },
+  {
+    q: "¿Qué elemento provoca la chispa en el interior de los motores de gasolina para encender la mezcla de aire y combustible?",
+    options: ["Los inyectores", "Las bujías", "El alternador", "El radiador"],
+    correct: 1,
+    explain:
+      "Las bujías generan la chispa eléctrica que enciende la mezcla aire-combustible en los cilindros.",
+  },
+  {
+    q: "¿Cubre el seguro obligatorio de vehículo la responsabilidad civil por daños a terceros?",
+    options: [
+      "No, solo cubre robo",
+      "Sí, cubre daños corporales y materiales a terceros dentro de los límites de la póliza",
+      "Solo cubre al conductor culpable",
+      "Únicamente si el choque ocurre en autopista",
+    ],
+    correct: 1,
+    explain:
+      "El seguro obligatorio de ley cubre la responsabilidad civil por daños personales y materiales causados a terceros hasta el límite contratado.",
   },
 ];
+
 /* ---------- Datos Módulo 04: Transporte Público ---------- */
 const transportRoutes = [
   {
@@ -264,6 +575,7 @@ const transportRoutes = [
       "Pintura (Prolongación 27 de Febrero) → Av. Luperón → Av. Núñez de Cáceres → Av. Winston Churchill → Av. Máximo Gómez → Puente Duarte → Av. Las Américas / Boca Chica.",
   },
 ];
+
 /* ---------- Datos Módulo 05: Universidades ---------- */
 const universities = [
   {

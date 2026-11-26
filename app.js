@@ -264,6 +264,8 @@ function fuelCalc() {
 
 const tripKm = document.getElementById("tripKm");
 const tripEff = document.getElementById("tripEff");
+const tripTolls = document.getElementById("tripTolls");
+const tripBreakdown = document.getElementById("tripBreakdown");
 const tripResultValue = document.getElementById("tripResultValue");
 const routeChips = document.getElementById("routeChips");
 const engineChips = document.getElementById("engineChips");
@@ -273,12 +275,12 @@ popularRoutes.forEach((r) => {
   b.className = "chip";
   b.type = "button";
   b.textContent = `${r.label} (${r.km} km)`;
-
+  b.title = r.tollNote;
   b.addEventListener("click", () => {
     tripKm.value = r.km;
+    tripTolls.value = r.tollsRoundTrip;
     tripCalc();
   });
-
   routeChips.appendChild(b);
 });
 
@@ -287,12 +289,10 @@ enginePresets.forEach((e) => {
   b.className = "chip";
   b.type = "button";
   b.textContent = `${e.label} (${e.kmPerGallon} km/g)`;
-
   b.addEventListener("click", () => {
     tripEff.value = e.kmPerGallon;
     tripCalc();
   });
-
   engineChips.appendChild(b);
 });
 
@@ -300,29 +300,53 @@ function tripCalc() {
   const f = fuels.find((x) => x.id === fuelType.value);
   const km = parseFloat(tripKm.value) || 0;
   const eff = parseFloat(tripEff.value) || 1;
+  const tolls = parseFloat(tripTolls.value) || 0;
+  const gasCost = (km / eff) * f.price;
+  const total = gasCost + tolls;
 
-  tripResultValue.textContent = formatMoney((km / eff) * f.price, "RD$");
+  tripBreakdown.textContent = `Gasolina: ${formatMoney(gasCost, "RD$")} + Peajes: ${formatMoney(tolls, "RD$")}`;
+  tripResultValue.textContent = formatMoney(total, "RD$");
 }
+
+// Renderizar tabla oficial de los 17 peajes
+const tollTableBody = document.getElementById("tollTableBody");
+let lastCorridor = "";
+tollsData.forEach((t) => {
+  if (t.corridor !== lastCorridor) {
+    lastCorridor = t.corridor;
+    const trHead = document.createElement("tr");
+    trHead.className = "toll-corridor";
+    trHead.innerHTML = `<td colspan="6">Corredor ${t.corridor}</td>`;
+    tollTableBody.appendChild(trHead);
+  }
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${t.name}</td>
+    <td><strong>RD$ ${t.cat1}</strong></td>
+    <td>RD$ ${t.cat2}</td>
+    <td>RD$ ${t.cat3}</td>
+    <td>RD$ ${t.cat4}</td>
+    <td>RD$ ${t.cat5}</td>
+  `;
+  tollTableBody.appendChild(tr);
+});
 
 fuelType.addEventListener("change", () => {
   fuelCalc();
   tripCalc();
 });
-
 fuelAmount.addEventListener("input", fuelCalc);
 tripKm.addEventListener("input", tripCalc);
 tripEff.addEventListener("input", tripCalc);
+tripTolls.addEventListener("input", tripCalc);
 
 fuelModeToggle.addEventListener("click", (e) => {
   const btn = e.target.closest("button[data-mode]");
   if (!btn) return;
-
   fuelMode = btn.dataset.mode;
-
   [...fuelModeToggle.children].forEach((b) =>
     b.classList.toggle("active", b === btn),
   );
-
   if (fuelMode === "byAmount") {
     fuelAmountLabel.textContent = "Monto en RD$";
     fuelAmount.value = 1000;
@@ -330,7 +354,6 @@ fuelModeToggle.addEventListener("click", (e) => {
     fuelAmountLabel.textContent = "Cantidad de galones";
     fuelAmount.value = 10;
   }
-
   fuelCalc();
 });
 

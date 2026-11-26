@@ -538,3 +538,59 @@ footer {
   border: 1px dashed var(--line);
   font-size: 0.9rem;
 }
+/* ---------- Tabla de los 17 Peajes RD Vial ---------- */
+.toll-details {
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  border-radius: var(--radius);
+}
+.toll-details summary {
+  padding: 13px 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--ink);
+}
+.toll-details summary:hover {
+  color: var(--gold);
+}
+.toll-wrap {
+  overflow-x: auto;
+  border-top: 1px solid var(--line);
+}
+.toll-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  min-width: 540px;
+}
+.toll-table th,
+.toll-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.toll-table th:first-child,
+.toll-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+.toll-table th {
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+  background: var(--paper);
+}
+.toll-table th small {
+  font-weight: 400;
+  font-size: 0.66rem;
+}
+.toll-corridor td {
+  background: rgba(185, 135, 42, 0.1);
+  font-weight: 700 !important;
+  color: var(--gold);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
