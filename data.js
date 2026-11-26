@@ -1,4 +1,4 @@
-const UPDATED_AT = "26 nov 2026, 03:25 PM";
+const UPDATED_AT = "26 nov 2026, 03:27 PM";
 
 const rates = {
   USD: [
