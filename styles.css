@@ -374,6 +374,64 @@ select:focus {
   color: var(--ink);
 }
 
+/* ---------- Tabla de los 17 Peajes RD Vial ---------- */
+.toll-details {
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  border-radius: var(--radius);
+}
+.toll-details summary {
+  padding: 13px 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--ink);
+}
+.toll-details summary:hover {
+  color: var(--gold);
+}
+.toll-wrap {
+  overflow-x: auto;
+  border-top: 1px solid var(--line);
+}
+.toll-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  min-width: 540px;
+}
+.toll-table th,
+.toll-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.toll-table th:first-child,
+.toll-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+.toll-table th {
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+  background: var(--paper);
+}
+.toll-table th small {
+  font-weight: 400;
+  font-size: 0.66rem;
+}
+.toll-corridor td {
+  background: rgba(185, 135, 42, 0.1);
+  font-weight: 700 !important;
+  color: var(--gold);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- 03 Simulador INTRANT ---------- */
 .quiz-box {
   background: var(--paper-raised);
   border: 1px solid var(--line);
@@ -421,65 +479,6 @@ select:focus {
   border-top: 1px solid var(--line);
 }
 
-.compact-ledger {
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-.compact-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  font-size: 0.9rem;
-  border-bottom: 1px solid var(--line);
-}
-.compact-row:last-child {
-  border-bottom: none;
-}
-.compact-row span:first-child {
-  font-weight: 600;
-}
-.compact-row .status {
-  font-size: 0.72rem;
-  padding: 3px 9px;
-  border: 1px solid var(--line);
-  color: var(--ink-soft);
-}
-
-footer {
-  border-top: 1px solid var(--line);
-  padding: 24px 0;
-  font-size: 0.8rem;
-  color: var(--ink-soft);
-}
-.tools {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-.tools .field {
-  flex: 1;
-  min-width: 200px;
-  margin-bottom: 0;
-}
-.compact-row .meta {
-  display: block;
-  font-size: 0.78rem;
-  font-weight: 400;
-  color: var(--ink-soft);
-  margin-top: 2px;
-}
-.compact-row span:first-child {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.compact-row .meta {
-  font-size: 0.8rem;
-  font-weight: 400;
-  color: var(--ink-soft);
-}
 /* ---------- 04 Transporte ---------- */
 .route-list {
   display: flex;
@@ -538,59 +537,10 @@ footer {
   border: 1px dashed var(--line);
   font-size: 0.9rem;
 }
-/* ---------- Tabla de los 17 Peajes RD Vial ---------- */
-.toll-details {
-  margin-top: 24px;
-  border: 1px solid var(--line);
-  background: var(--paper-raised);
-  border-radius: var(--radius);
-}
-.toll-details summary {
-  padding: 13px 16px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  color: var(--ink);
-}
-.toll-details summary:hover {
-  color: var(--gold);
-}
-.toll-wrap {
-  overflow-x: auto;
+
+footer {
   border-top: 1px solid var(--line);
-}
-.toll-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.84rem;
-  min-width: 540px;
-}
-.toll-table th,
-.toll-table td {
-  padding: 9px 12px;
-  border-bottom: 1px solid var(--line);
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-.toll-table th:first-child,
-.toll-table td:first-child {
-  text-align: left;
-  font-weight: 500;
-}
-.toll-table th {
-  font-size: 0.74rem;
+  padding: 24px 0;
+  font-size: 0.8rem;
   color: var(--ink-soft);
-  background: var(--paper);
-}
-.toll-table th small {
-  font-weight: 400;
-  font-size: 0.66rem;
-}
-.toll-corridor td {
-  background: rgba(185, 135, 42, 0.1);
-  font-weight: 700 !important;
-  color: var(--gold);
-  font-size: 0.76rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
