@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Pulso RD</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap brandrow">
+        <h1 class="brand">Pulso<em>RD</em></h1>
+        <div class="headerRight">
+          <p class="tagline">
+            Datos del día a día dominicano, en un solo lugar.
+          </p>
+          <button class="themeBtn" id="themeToggle" aria-label="Cambiar tema">
+            Modo oscuro
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <nav class="ticker" aria-label="Resumen rápido">
+      <div class="wrap">
+        <div class="ticker-row" id="tickerRow"></div>
+      </div>
+    </nav>
+
+    <main class="wrap">
+      <!-- 01 — DIVISAS -->
+      <section id="divisas">
+        <div class="section-head">
+          <h2>01 — Divisas</h2>
+          <span class="note" id="updatedNote"></span>
+        </div>
+        <p class="section-sub">
+          Compra = el banco te compra la divisa (recibes pesos). Venta = el
+          banco te vende la divisa (pagas en pesos).
+        </p>
+
+        <div class="toggles">
+          <div class="toggle-group" id="dirToggle">
+            <button data-dir="buy" class="active">
+              Tengo divisa → quiero DOP
+            </button>
+            <button data-dir="sell">Tengo DOP → quiero divisa</button>
+          </div>
+          <div class="toggle-group" id="curToggle">
+            <button data-cur="USD" class="active">USD</button>
+            <button data-cur="EUR">EUR</button>
+          </div>
+        </div>
+
+        <div class="calc">
+          <div>
+            <div class="field">
+              <label id="amountLabel" for="amount">Monto en USD</label>
+              <input type="number" id="amount" value="100" min="0" step="1" />
+            </div>
+            <div class="field">
+              <label for="bank">Banco / remesadora</label>
+              <select id="bank"></select>
+            </div>
+            <div class="result">
+              <div class="small" id="resultLabel">
+                Recibes en pesos dominicanos
+              </div>
+              <div class="big" id="resultValue">RD$ 0.00</div>
+              <button class="shareBtn" id="shareBtn">Copiar resumen</button>
+            </div>
+          </div>
+          <div>
+            <div class="bank-rates">
+              <div class="head-row">
+                <span>Banco</span><span>Compra</span><span>Venta</span>
+              </div>
+              <div id="bankList"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 — COMBUSTIBLES -->
+      <section id="combustibles">
+        <div class="section-head">
+          <h2>02 — Combustibles</h2>
+          <span class="note" id="fuelWeekNote"></span>
+        </div>
+        <p class="section-sub">
+          Precios oficiales por galón (Industria y Comercio).
+        </p>
+
+        <div class="fuel-table" id="fuelTable"></div>
+
+        <div class="toggles">
+          <div class="toggle-group" id="fuelModeToggle">
+            <button data-mode="byAmount" class="active">
+              Tengo RD$, ¿cuántos galones?
+            </button>
+            <button data-mode="byGallons">
+              Quiero X galones, ¿cuánto pago?
+            </button>
+          </div>
+        </div>
+
+        <div class="field" style="max-width: 340px">
+          <label for="fuelType">Combustible para ambas calculadoras</label>
+          <select id="fuelType"></select>
+        </div>
+
+        <div class="calc">
+          <div>
+            <div class="field">
+              <label id="fuelAmountLabel" for="fuelAmount">Monto en RD$</label>
+              <input
+                type="number"
+                id="fuelAmount"
+                value="1000"
+                min="0"
+                step="50"
+              />
+            </div>
+            <div class="result">
+              <div class="small" id="fuelResultLabel">Galones aproximados</div>
+              <div class="big" id="fuelResultValue">0.00</div>
+            </div>
+          </div>
+          <div>
+            <div class="chips" id="routeChips"></div>
+            <div class="field">
+              <label for="tripKm">Distancia del viaje (km, ida y vuelta)</label>
+              <input type="number" id="tripKm" value="310" min="0" step="1" />
+            </div>
+            <div class="chips" id="engineChips"></div>
+            <div class="field">
+              <label for="tripEff">Rendimiento (km por galón)</label>
+              <input type="number" id="tripEff" value="32" min="1" step="1" />
+            </div>
+            <div class="result">
+              <div class="small">Costo estimado del viaje</div>
+              <div class="big" id="tripResultValue">RD$ 0.00</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 — INTRANT -->
+      <section id="intrant">
+        <div class="section-head">
+          <h2>03 — Simulador INTRANT</h2>
+          <span class="note" id="quizProgress">Pregunta 1 de 10</span>
+        </div>
+        <p class="section-sub">
+          Práctica teórica basada en la Ley 63-17 de Movilidad y Tránsito
+          Terrestre.
+        </p>
+
+        <div class="quiz-box" id="quizBox"></div>
+      </section>
+
+      <!-- 04 — TRANSPORTE -->
+      <section id="transporte">
+        <div class="section-head">
+          <h2>04 — Transporte público</h2>
+          <span class="note">Gran Santo Domingo</span>
+        </div>
+        <p class="section-sub">
+          Rutas, tarifas y conexiones de Metro, Teleférico, Corredores y OMSA.
+        </p>
+
+        <div class="toggles">
+          <div class="toggle-group" id="transportFilter">
+            <button data-type="ALL" class="active">Todos</button>
+            <button data-type="Metro">Metro</button>
+            <button data-type="Teleférico">Teleférico</button>
+            <button data-type="Corredor">Corredores</button>
+            <button data-type="OMSA">OMSA</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="transportSearch">Buscar parada, avenida o sector</label>
+          <input
+            type="search"
+            id="transportSearch"
+            placeholder="Ej: Megacentro, Churchill, Mamá Tingó, Kennedy..."
+          />
+        </div>
+
+        <div class="route-list" id="routeList"></div>
+      </section>
+
+      <!-- 05 — UNIVERSIDADES -->
+      <section id="universidades">
+        <div class="section-head">
+          <h2>05 — Universidades y carreras</h2>
+          <span class="note">República Dominicana</span>
+        </div>
+        <p class="section-sub">Busca por nombre, ciudad o área de estudio.</p>
+
+        <div class="tools">
+          <div class="field">
+            <label for="uniSearch">Buscar</label>
+            <input
+              type="search"
+              id="uniSearch"
+              placeholder="Ej: medicina, sistemas, Santiago…"
+            />
+          </div>
+          <div class="field">
+            <label for="uniFilter">Tipo</label>
+            <select id="uniFilter">
+              <option value="all">Todas</option>
+              <option value="Pública">Pública</option>
+              <option value="Privada">Privada</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="compact-ledger" id="uniList"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        Pulso RD — Datos de referencia, verifica siempre con la fuente oficial
+        antes de hacer una transacción.
+      </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
