@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nutriasuave.github.io/pulso-rd/sitemap.xml
