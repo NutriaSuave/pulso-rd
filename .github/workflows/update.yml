@@ -1,0 +1,32 @@
+name: Actualizar tasas Pulso RD
+
+on:
+  schedule:
+    # Se ejecuta todos los días a las 9:00 AM y 3:00 PM hora RD (13:00 y 19:00 UTC)
+    - cron: "0 13,19 * * *"
+  workflow_dispatch: # Permite ejecutarlo manualmente con un clic cuando quieras
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Ejecutar actualizador de datos
+        run: python scripts/update_data.py
+
+      - name: Guardar cambios en data.js
+        run: |
+          git config user.name "PulsoRD Bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data.js
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: actualizar tasas del día" && git push)
