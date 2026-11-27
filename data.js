@@ -70,11 +70,11 @@ const tollsData = [
   {
     name: "Marbella (Autopista del Nordeste)",
     corridor: "Nordeste",
-    cat1: 100,
-    cat2: 200,
-    cat3: 300,
-    cat4: 400,
-    cat5: 600,
+    cat1: 60,
+    cat2: 120,
+    cat3: 180,
+    cat4: 240,
+    cat5: 240,
   },
   {
     name: "Guaraguao (Autopista del Nordeste)",
@@ -239,11 +239,16 @@ const intrantQuestions = [
       "El cuestionario oficial del INTRANT establece un límite máximo de 20 km/h en zonas escolares para proteger a los estudiantes.",
   },
   {
-    q: "¿Cuál es la velocidad máxima permitida en las avenidas de las zonas urbanas en República Dominicana, salvo señalización distinta?",
-    options: ["45 km/h", "60 km/h", "80 km/h", "100 km/h"],
+    q: "Según la Ley 63-17, ¿cuál es el rango de velocidad máxima permitida en zona urbana residencial, salvo señalización u ordenanza municipal distinta?",
+    options: [
+      "De 10 a 20 km/h",
+      "De 30 a 60 km/h",
+      "Siempre 80 km/h",
+      "No existe límite en zona urbana",
+    ],
     correct: 1,
     explain:
-      "Según la Ley 63-17, el límite general en zonas urbanas es de 60 km/h.",
+      "La Ley 63-17 establece un rango de 30 a 60 km/h en zona urbana residencial (no un número fijo). Además, los ayuntamientos pueden fijar límites propios por ordenanza — por ejemplo, el Distrito Nacional tiene una ordenanza vigente que fija 50 km/h en sus avenidas.",
   },
   {
     q: "¿Cuál es el período de vigencia de la licencia de conducir de Categoría 02 antes de cumplir los 65 años de edad?",
@@ -253,16 +258,11 @@ const intrantQuestions = [
       "La licencia Categoría 02 tiene una vigencia de 4 años hasta los 65 años de edad; a partir de los 65 años pasa a renovarse cada 2 años.",
   },
   {
-    q: "¿Cuál es la tasa máxima de alcohol permitida a un conductor titular de un permiso de aprendizaje o transporte público?",
-    options: [
-      "0.0 miligramos por litro de aire espirado",
-      "0.2 miligramos por litro",
-      "0.5 miligramos por litro",
-      "0.8 miligramos por litro",
-    ],
+    q: "¿Cuál es la tasa máxima de alcoholemia (gramos de alcohol por litro de sangre) permitida a un titular de permiso de aprendizaje?",
+    options: ["0.0 g/l (tolerancia cero)", "0.2 g/l", "0.5 g/l", "0.8 g/l"],
     correct: 0,
     explain:
-      "La Ley 63-17 exige tolerancia cero (0.0 mg/l) para conductores con permiso de aprendizaje, transporte público y vehículos de carga.",
+      "El manual oficial del INTRANT establece que queda totalmente prohibida la conducción con un nivel de alcoholemia mayor a 0,0 g/l para titulares de un permiso de aprendizaje.",
   },
   {
     q: "En una situación de aglomeración o para rebasar a otro vehículo, ¿está permitido circular por el paseo o arcén?",
