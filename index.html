@@ -21,6 +21,14 @@
     <link rel="canonical" href="https://nutriasuave.github.io/pulso-rd/" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Pulso RD" />
 
     <!-- Vista previa profesional al compartir en WhatsApp y redes -->
     <meta property="og:type" content="website" />
@@ -636,15 +644,29 @@
         </div>
 
         <div class="toggles">
-          <div class="toggle-group" id="dirToggle">
-            <button data-dir="buy" class="active">
+          <div
+            class="toggle-group"
+            id="dirToggle"
+            role="group"
+            aria-label="Dirección del cambio"
+          >
+            <button data-dir="buy" class="active" aria-pressed="true">
               Tengo divisa → quiero DOP
             </button>
-            <button data-dir="sell">Tengo DOP → quiero divisa</button>
+            <button data-dir="sell" aria-pressed="false">
+              Tengo DOP → quiero divisa
+            </button>
           </div>
-          <div class="toggle-group" id="curToggle">
-            <button data-cur="USD" class="active">USD</button>
-            <button data-cur="EUR">EUR</button>
+          <div
+            class="toggle-group"
+            id="curToggle"
+            role="group"
+            aria-label="Moneda"
+          >
+            <button data-cur="USD" class="active" aria-pressed="true">
+              USD
+            </button>
+            <button data-cur="EUR" aria-pressed="false">EUR</button>
           </div>
         </div>
 
@@ -662,7 +684,9 @@
               <div class="small" id="resultLabel">
                 Recibes en pesos dominicanos
               </div>
-              <div class="big" id="resultValue">RD$ 0.00</div>
+              <div class="big" id="resultValue" aria-live="polite">
+                RD$ 0.00
+              </div>
               <button class="shareBtn" id="shareBtn">Copiar resumen</button>
             </div>
           </div>
@@ -689,11 +713,16 @@
         <div class="fuel-table" id="fuelTable"></div>
 
         <div class="toggles">
-          <div class="toggle-group" id="fuelModeToggle">
-            <button data-mode="byAmount" class="active">
+          <div
+            class="toggle-group"
+            id="fuelModeToggle"
+            role="group"
+            aria-label="Modo de cálculo de combustible"
+          >
+            <button data-mode="byAmount" class="active" aria-pressed="true">
               Tengo RD$, ¿cuántos galones?
             </button>
-            <button data-mode="byGallons">
+            <button data-mode="byGallons" aria-pressed="false">
               Quiero X galones, ¿cuánto pago?
             </button>
           </div>
@@ -718,7 +747,9 @@
             </div>
             <div class="result">
               <div class="small" id="fuelResultLabel">Galones aproximados</div>
-              <div class="big" id="fuelResultValue">0.00</div>
+              <div class="big" id="fuelResultValue" aria-live="polite">
+                0.00
+              </div>
             </div>
           </div>
           <div>
@@ -744,7 +775,9 @@
             </div>
             <div class="result">
               <div class="small" id="tripBreakdown">Combustible + Peajes</div>
-              <div class="big" id="tripResultValue">RD$ 0.00</div>
+              <div class="big" id="tripResultValue" aria-live="polite">
+                RD$ 0.00
+              </div>
               <button class="shareBtn" id="tripShareBtn">Copiar resumen</button>
             </div>
           </div>
@@ -775,7 +808,9 @@
       <section id="intrant">
         <div class="section-head">
           <h2>03 — Simulador INTRANT</h2>
-          <span class="note" id="quizProgress">Pregunta 1 de 25</span>
+          <span class="note" id="quizProgress" aria-live="polite"
+            >Pregunta 1 de 25</span
+          >
         </div>
         <p class="section-sub">
           Práctica teórica basada en la Ley 63-17 de Movilidad y Tránsito
@@ -795,12 +830,23 @@
         </p>
 
         <div class="toggles">
-          <div class="toggle-group" id="transportFilter">
-            <button data-type="ALL" class="active">Todos</button>
-            <button data-type="Metro">Metro</button>
-            <button data-type="Teleférico">Teleférico</button>
-            <button data-type="Corredor">Corredores</button>
-            <button data-type="OMSA">OMSA</button>
+          <div
+            class="toggle-group"
+            id="transportFilter"
+            role="group"
+            aria-label="Filtrar por tipo de transporte"
+          >
+            <button data-type="ALL" class="active" aria-pressed="true">
+              Todos
+            </button>
+            <button data-type="Metro" aria-pressed="false">Metro</button>
+            <button data-type="Teleférico" aria-pressed="false">
+              Teleférico
+            </button>
+            <button data-type="Corredor" aria-pressed="false">
+              Corredores
+            </button>
+            <button data-type="OMSA" aria-pressed="false">OMSA</button>
           </div>
         </div>
 
@@ -897,11 +943,11 @@
         {
           name: "Marbella (Autopista del Nordeste)",
           corridor: "Nordeste",
-          cat1: 100,
-          cat2: 200,
-          cat3: 300,
-          cat4: 400,
-          cat5: 600,
+          cat1: 60,
+          cat2: 120,
+          cat3: 180,
+          cat4: 240,
+          cat5: 240,
         },
         {
           name: "Guaraguao (Autopista del Nordeste)",
@@ -1597,9 +1643,11 @@
         const btn = e.target.closest("button[data-dir]");
         if (!btn) return;
         dState.dir = btn.dataset.dir;
-        [...dirToggle.children].forEach((b) =>
-          b.classList.toggle("active", b === btn),
-        );
+        [...dirToggle.children].forEach((b) => {
+          const isActive = b === btn;
+          b.classList.toggle("active", isActive);
+          b.setAttribute("aria-pressed", String(isActive));
+        });
         renderDivisas();
       });
 
@@ -1607,9 +1655,11 @@
         const btn = e.target.closest("button[data-cur]");
         if (!btn) return;
         dState.cur = btn.dataset.cur;
-        [...curToggle.children].forEach((b) =>
-          b.classList.toggle("active", b === btn),
-        );
+        [...curToggle.children].forEach((b) => {
+          const isActive = b === btn;
+          b.classList.toggle("active", isActive);
+          b.setAttribute("aria-pressed", String(isActive));
+        });
         renderDivisas();
       });
 
@@ -1771,9 +1821,11 @@
         const btn = e.target.closest("button[data-mode]");
         if (!btn) return;
         fuelMode = btn.dataset.mode;
-        [...fuelModeToggle.children].forEach((b) =>
-          b.classList.toggle("active", b === btn),
-        );
+        [...fuelModeToggle.children].forEach((b) => {
+          const isActive = b === btn;
+          b.classList.toggle("active", isActive);
+          b.setAttribute("aria-pressed", String(isActive));
+        });
         if (fuelMode === "byAmount") {
           fuelAmountLabel.textContent = "Monto en RD$";
           fuelAmount.value = 1000;
@@ -1833,7 +1885,7 @@
     <div class="quiz-opts">
       ${item.options.map((opt, i) => `<button class="quiz-opt" data-i="${i}">${opt}</button>`).join("")}
     </div>
-    <div id="quizFeedback"></div>
+    <div id="quizFeedback" aria-live="polite"></div>
   `;
 
         const opts = quizBox.querySelectorAll(".quiz-opt");
@@ -1904,14 +1956,22 @@
         const btn = e.target.closest("button[data-type]");
         if (!btn) return;
         activeTransportType = btn.dataset.type;
-        [...transportFilter.children].forEach((b) =>
-          b.classList.toggle("active", b === btn),
-        );
+        [...transportFilter.children].forEach((b) => {
+          const isActive = b === btn;
+          b.classList.toggle("active", isActive);
+          b.setAttribute("aria-pressed", String(isActive));
+        });
         renderRoutes();
       });
 
       transportSearch.addEventListener("input", renderRoutes);
       renderRoutes();
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js").catch(() => {});
+        });
+      }
     </script>
   </body>
 </html>
